@@ -284,3 +284,190 @@ button {
 
   font-size: 14px;
 }
+
+
+/* 買い物リスト画面　*/
+
+.shopping-section {
+  padding: 16px;
+}
+
+.section-label {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.date-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.date-range input {
+  flex: 1;
+  padding: 8px;
+}
+
+.selected-recipes {
+  margin-bottom: 16px;
+}
+
+.small-recipe-image {
+  width: 48px;
+  height: 48px;
+  background: #f7f7f7;
+  border: 1px solid #ddd;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shopping-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.shopping-list li {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  align-items: center;
+
+  padding: 12px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.shopping-list input {
+  width: auto;
+}
+
+.amount {
+  font-size: 13px;
+}
+
+.checked-item {
+  opacity: 0.5;
+}
+
+
+
+
+/* 献立表（カレンダー）画面 */
+
+.calendar-section {
+  padding: 16px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.calendar-header a {
+  text-decoration: none;
+  color: #333;
+  font-size: 20px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+
+  border-top: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+}
+
+.day-name,
+.day {
+  min-height: 48px;
+  padding: 6px;
+
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+.day-name {
+  min-height: auto;
+  text-align: center;
+  font-weight: bold;
+  background: #f7f7f7;
+}
+
+.day span {
+  font-size: 10px;
+}
+
+.today {
+  background: #fff3d6;
+  font-weight: bold;
+}
+
+.has-menu {
+  background: #ffe8c2;
+}
+
+.muted {
+  color: #aaa;
+}
+
+
+/* 献立追加画面 */
+
+.calendar-recipe-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.calendar-recipe-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px;
+
+  border: 1px solid #eee;
+  border-radius: 10px;
+
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.calendar-recipe-item input {
+  width: auto;
+  flex-shrink: 0;
+}
+
+.recipe-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  flex: 1;
+  min-width: 0;
+
+  text-decoration: none;
+  color: #333;
+}
+
+.recipe-link .recipe-image {
+  width: 80px;
+  height: 60px;
+  flex-shrink: 0;
+}
+
+.recipe-link p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: bold;
+  white-space: nowrap;
+}

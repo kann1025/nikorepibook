@@ -13,6 +13,9 @@ urlpatterns = [
     path("calendar/",views.calendar_view,
          name="calendar"),
     path("mypage/",views.mypage,name="mypage"),
+    path("calendar_add/",views.calendar_add,
+         name="calendar_add"),
+    
     
     
 

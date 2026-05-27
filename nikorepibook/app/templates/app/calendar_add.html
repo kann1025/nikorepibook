@@ -1,0 +1,46 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+
+<div class="app">
+
+  <header class="header">
+    <h1>献立追加</h1>
+  </header>
+
+  <section>
+
+    <h2>レシピを選択</h2>
+
+    <input
+      type="text"
+      placeholder="レシピ検索"
+    >
+
+    <div class="calendar-recipe-list">
+
+      <div class="calendar-recipe-item">
+
+        <input type="checkbox">
+        <a href="/recipe/" class="recipe-link">
+          <div class="recipe-image">🍳</div>
+          <p>シンプルオムライス</p>
+        </a>
+      </div>
+
+      <div class="calendar-recipe-item">
+
+        <input type="checkbox">
+        <a href="/recipe/" class="recipe-link">
+          <div class="recipe-image">🍗</div>
+          <p>鶏肉と野菜炒め</p>
+       </a>
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+
+{% endblock %}

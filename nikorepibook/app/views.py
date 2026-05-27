@@ -27,3 +27,6 @@ def calendar_view(request):
 
 def mypage(request):
     return render(request, "app/mypage.html")
+
+def calendar_add(request):
+    return render(request,"app/calendar_add.html")
