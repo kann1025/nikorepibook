@@ -176,8 +176,11 @@ body {
     justify-content: center;
   }
 
-  .recipe-card p {
+  .recipe-card {
     font-size: 13px;
+    text-decoration: none;
+    color: #333;
+    display: block;
   }
 
   .bottom-nav {
@@ -257,4 +260,27 @@ button {
   color: white;
 
   font-weight: bold;
+}
+
+
+.recipe-url {
+  font-size: 13px;
+  margin-bottom: 12px;
+  color: #555;
+}
+
+.memo-box {
+  width: 100%;
+  height: 160px;
+
+  padding: 12px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  resize: none;
+
+  font-size: 14px;
 }

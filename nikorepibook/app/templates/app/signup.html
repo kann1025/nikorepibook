@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>新規登録</title>
+{% extends "app/base.html" %}
 
-  <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
+{% block content %}
+
+
   <div class="app-container">
     <h2>新規登録画面</h2>
 
@@ -58,5 +54,5 @@
       <button type="submit">アカウントを登録する</button>
     </form>
   </div>
-</body>
-</html>
+
+  {% endblock %}

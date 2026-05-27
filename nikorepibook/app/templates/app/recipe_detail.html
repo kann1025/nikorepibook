@@ -1,0 +1,52 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+
+<div class="app">
+
+  <header class="header">
+    <h1>レシピ詳細</h1>
+  </header>
+
+  <section>
+
+    <div class="recipe-image">
+      🍳
+    </div>
+
+    <h2>シンプルオムライス</h2>
+
+    <button class="add-button">
+      献立に追加
+    </button>
+
+    <button class="add-button">
+      レシピを編集
+    </button>
+
+    <h2>材料</h2>
+
+    <p>ごはん　450g</p>
+    <p>鶏もも肉　225g</p>
+    <p>卵　4個</p>
+
+    <h2>作り方</h2>
+
+    <p class="recipe-url">
+        参考URL：
+        https://cookpad.com/sample
+    </p>
+
+    <textarea class="memo-box">
+       ・卵は半熟気味
+       ・先に玉ねぎを炒める
+       ・次回はチーズ追加したい 
+    
+    </textarea>
+
+
+  </section>
+
+</div>
+
+{% endblock %}

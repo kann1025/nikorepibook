@@ -1,9 +1,11 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+
 <div class="app">
   <header class="header">
     <h1>にこれぴbook</h1>
     <p>レシピ一覧</p>
-
-     <link rel="stylesheet" href="/static/style.css">
   </header>
 
   <div class="search-box">
@@ -29,24 +31,18 @@
     <h2>レシピ一覧</h2>
 
     <div class="recipe-list">
-      <div class="recipe-card">
+      <a href="/recipe/" class="recipe-card">
         <div class="recipe-image">🍳</div>
         <p>シンプルオムライス</p>
-      </div>
+      </a>
 
-      <div class="recipe-card">
+      <a href="/recipe/" class="recipe-card">
         <div class="recipe-image">🍗</div>
         <p>鶏肉と野菜炒め</p>
-      </div>
+      </a>
     </div>
   </section>
 
-  <nav class="bottom-nav">
-    <a>🏠<br>ホーム</a>
-    <a>🛒<br>買い物リスト</a>
-    <a>📅<br>献立表</a>
-    <a>👤<br>マイページ</a>
-    <a>↩<br>ログアウト</a>
-  </nav>
 </div>
 
+{% endblock %}
