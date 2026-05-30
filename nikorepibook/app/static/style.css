@@ -67,6 +67,7 @@ body {
   }
 
   .link {
+    display: block;
     text-align: center;
     font-size: 12px;
     color: #3b73d9;
