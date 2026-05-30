@@ -471,3 +471,84 @@ button {
   font-weight: bold;
   white-space: nowrap;
 }
+
+
+/* レシピ登録画面 */
+
+.recipe-form {
+  padding: 16px;
+}
+
+.recipe-form label {
+  font-weight: bold;
+  margin-top: 16px;
+}
+
+.serving-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 24px;
+  font-weight: bold;
+}
+
+.ingredient-item {
+  display: grid;
+  grid-template-columns: 1fr 90px 32px;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.ingredient-item input[type="checkbox"] {
+  width: auto;
+}
+
+.recipe-form textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+
+/* マイページ画面 */
+
+.mypage-section {
+  padding: 24px;
+  text-align: center;
+}
+
+.profile-circle {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+
+  border-radius: 50%;
+  background: #e8eefc;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 36px;
+}
+
+.profile-info {
+  width: fit-content;
+  margin: 0 auto 24px;
+  text-align: left;
+}
+
+.mypage-button {
+  display: block;
+  margin: 12px 0;
+  padding: 12px;
+
+  background: #f6a623;
+  color: white;
+
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 6px;
+}

@@ -30,3 +30,6 @@ def mypage(request):
 
 def calendar_add(request):
     return render(request,"app/calendar_add.html")
+
+def recipi_create(request):
+    return render(request,"app/recipe_create.html")

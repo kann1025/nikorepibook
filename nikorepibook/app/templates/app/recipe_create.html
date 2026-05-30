@@ -1,0 +1,65 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+
+<div class="app">
+
+  <header class="header">
+    <h1>レシピ登録</h1>
+  </header>
+
+  <section class="recipe-form">
+
+    <label>タイトル</label>
+    <input type="text" placeholder="例）シンプルオムライス">
+
+    <div class="serving-row">
+      <span>何人分？</span>
+
+      <select>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+      </select>
+
+      <span>人分</span>
+    </div>
+
+    <h2>材料</h2>
+
+    <div class="ingredient-item">
+      <input type="text" placeholder="材料名">
+
+      <input type="text" placeholder="分量">
+
+      <input type="checkbox">
+    </div>
+
+    <div class="ingredient-item">
+      <input type="text" placeholder="材料名">
+
+      <input type="text" placeholder="分量">
+
+      <input type="checkbox">
+    </div>
+
+    <label>参考URL</label>
+    <input type="url" placeholder="https://example.com">
+
+    <label>メモ</label>
+
+    <textarea
+      rows="5"
+      placeholder="作り方メモ"
+    ></textarea>
+
+    <button class="save-button">
+      レシピを保存
+    </button>
+
+  </section>
+
+</div>
+
+{% endblock %}
