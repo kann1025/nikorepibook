@@ -552,3 +552,35 @@ button {
   font-weight: bold;
   border-radius: 6px;
 }
+
+/* マイページ編集 */
+
+.mypage-edit-section {
+  padding: 24px;
+}
+
+.mypage-edit-section label {
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.mypage-edit-section select {
+  width: 100%;
+  padding: 10px;
+}
+
+.save-button {
+  display: block;
+  margin-top: 24px;
+  padding: 12px;
+
+  background: #f6a623;
+  color: white;
+
+  text-align: center;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+}

@@ -17,6 +17,8 @@ urlpatterns = [
          name="calendar_add"),
     path("recipe_create/",
          views.recipi_create,name="recipe_create"),
+    path("mypage_edit/",
+         views.mypage_edit,name="mypage_edit"),
     
     
     

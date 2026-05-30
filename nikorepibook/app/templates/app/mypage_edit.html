@@ -1,0 +1,45 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+
+<div class="app">
+
+  <header class="header">
+    <h1>マイページ編集</h1>
+  </header>
+
+  <section class="mypage-edit-section">
+
+    <div class="profile-circle">
+      👤
+    </div>
+
+    <label>ニックネーム</label>
+    <input type="text" value="かじかな">
+
+    <label>大人</label>
+    <select>
+      <option>1</option>
+      <option selected>2</option>
+      <option>3</option>
+      <option>4</option>
+    </select>
+
+    <label>こども</label>
+    <select>
+      <option>0</option>
+      <option>1</option>
+      <option selected>2</option>
+      <option>3</option>
+      <option>4</option>
+    </select>
+
+    <a href="/mypage/" class="save-button">
+      保存
+    </a>
+
+  </section>
+
+</div>
+
+{% endblock %}
