@@ -1,11 +1,13 @@
 from django.shortcuts import render
+from .models import Recipe
 
 # Create your views here.
 
 from django.http import HttpResponse
 
 def home(request):
-    return render(request,"app/home.html")
+    recipes = Recipe.objects.all()
+    return render(request,"app/home.html",{'recipes':recipes})
 
 def login_view(request):
     return render(request,"app/login.html")

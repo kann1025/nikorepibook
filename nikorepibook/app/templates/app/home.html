@@ -31,15 +31,14 @@
     <h2>レシピ一覧</h2>
 
     <div class="recipe-list">
-      <a href="/recipe/" class="recipe-card">
-        <div class="recipe-image">🍳</div>
-        <p>シンプルオムライス</p>
-      </a>
+      {% for recipe in recipes %}
+         <a href="/recipe/" class="recipe-card">
+            <div class="recipe-image">🍳</div>
+            <p>{{ recipe.title }}</p>
+         </a>
 
-      <a href="/recipe/" class="recipe-card">
-        <div class="recipe-image">🍗</div>
-        <p>鶏肉と野菜炒め</p>
-      </a>
+      {% endfor %}
+
     </div>
   </section>
 
