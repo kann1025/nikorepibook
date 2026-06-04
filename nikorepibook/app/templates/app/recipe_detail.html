@@ -14,7 +14,7 @@
       🍳
     </div>
 
-    <h2>シンプルオムライス</h2>
+    <h2>{{ recipe.title }}</h2>
 
     <button class="add-button">
       献立に追加
@@ -34,14 +34,11 @@
 
     <p class="recipe-url">
         参考URL：
-        https://cookpad.com/sample
+        {{ recipe.reference_url }}
     </p>
 
     <textarea class="memo-box">
-       ・卵は半熟気味
-       ・先に玉ねぎを炒める
-       ・次回はチーズ追加したい 
-    
+       {{ recipe.memo }} 
     </textarea>
 
 

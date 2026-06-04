@@ -15,10 +15,12 @@ def login_view(request):
 def signup_view(request):
     return render(request,"app/signup.html")
 
-def recipe_detail(request):
+def recipe_detail(request,recipe_id):
+    recipe = Recipe.objects.get(id=recipe_id)
     return render(
         request,
-        "app/recipe_detail.html"
+        "app/recipe_detail.html",
+        {"recipe":recipe}
     )
     
 def shoppinng_list(request):

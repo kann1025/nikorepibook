@@ -32,7 +32,7 @@
 
     <div class="recipe-list">
       {% for recipe in recipes %}
-         <a href="/recipe/" class="recipe-card">
+         <a href="{% url 'recipe_detail' recipe.id %}" class="recipe-card">
             <div class="recipe-image">🍳</div>
             <p>{{ recipe.title }}</p>
          </a>

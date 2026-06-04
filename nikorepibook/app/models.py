@@ -5,6 +5,8 @@ class Recipe(models.Model):
     servings = models.IntegerField(default=2)
     reference_url = models.URLField(blank=True)
     memo = models.TextField(blank=True)
+    ingredients = models.TextField(blank=True)
+    steps = models.TextField(blank=True)
 
     def __str__(self):
         return self.title
