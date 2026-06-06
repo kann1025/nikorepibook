@@ -40,13 +40,18 @@ def recipe_create(request):
        title = request.POST.get("title")
        servings = request.POST.get("servings")
        memo = request.POST.get("memo")
-       reference = request.POST.get("reference")
+       reference_url = request.POST.get("reference_url")
+       ingredient_name = request.POST.get("ingredient_name")
+       ingredient_amount = request.POST.get("ingredient_amount")
+       
+       ingredients = f"{ingredient_name} {ingredient_amount}"
        
        Recipe.objects.create(
             title=title,
             servings=servings,
-            memo=memo
-            reference=reference
+            memo=memo,
+            reference_url=reference_url,
+            ingredients=ingredients
        )
        return redirect("home")    
     return render(request,"app/recipe_create.html")
