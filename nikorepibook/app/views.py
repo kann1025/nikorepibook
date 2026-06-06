@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Recipe
 
 # Create your views here.
@@ -35,7 +35,20 @@ def mypage(request):
 def calendar_add(request):
     return render(request,"app/calendar_add.html")
 
-def recipi_create(request):
+def recipe_create(request):
+    if request.method == "POST":
+       title = request.POST.get("title")
+       servings = request.POST.get("servings")
+       memo = request.POST.get("memo")
+       reference = request.POST.get("reference")
+       
+       Recipe.objects.create(
+            title=title,
+            servings=servings,
+            memo=memo
+            reference=reference
+       )
+       return redirect("home")    
     return render(request,"app/recipe_create.html")
 
 def mypage_edit(request):

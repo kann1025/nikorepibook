@@ -16,7 +16,7 @@ urlpatterns = [
     path("calendar_add/",views.calendar_add,
          name="calendar_add"),
     path("recipe_create/",
-         views.recipi_create,name="recipe_create"),
+         views.recipe_create,name="recipe_create"),
     path("mypage_edit/",
          views.mypage_edit,name="mypage_edit"),
     
