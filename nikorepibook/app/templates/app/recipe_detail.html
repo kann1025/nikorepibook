@@ -26,11 +26,11 @@
 
     <h2>材料</h2>
 
-    <p>ごはん　450g</p>
-    <p>鶏もも肉　225g</p>
-    <p>卵　4個</p>
+    <p>{{ recipe.ingredients|linebreaksbr }}</p>
 
     <h2>作り方</h2>
+
+    <p>{{ recipe.steps|linebreaksbr }}</p>
 
     <p class="recipe-url">
         参考URL：
