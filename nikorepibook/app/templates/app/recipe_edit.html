@@ -1,0 +1,46 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+<div class="app">
+
+    <header class="header">
+        <h1>レシピ編集</h1>
+    </header>
+
+    <section>
+        <form method="post">
+            {% csrf_token %}
+
+            <p>
+                タイトル<br>
+                <input type="text" name="title" value="{{ recipe.title }}" class="form-input">
+            </p>
+
+            <p>
+                人数<br>
+                <input type="number" name="servings" value="{{ recipe.servings }}" class="form-input">
+            </p>
+
+            <p>
+                材料<br>
+                <textarea name="ingredients" rows="5" class="form-input">{{ recipe.ingredients }}</textarea>
+            </p>
+
+            <p>
+                参考URL<br>
+                <input type="url" name="reference_url" value="{{ recipe.reference_url }}" class="form-input">
+            </p>
+
+            <p>
+                メモ<br>
+                <textarea name="memo" rows="5" class="form-input">{{ recipe.memo }}</textarea>
+            </p>
+
+            <button type="submit" class="add-button">保存する</button>
+        </form>
+    </section>
+
+</div>
+
+{% endblock %}

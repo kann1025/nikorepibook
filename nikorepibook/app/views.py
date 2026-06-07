@@ -22,6 +22,24 @@ def recipe_detail(request,recipe_id):
         "app/recipe_detail.html",
         {"recipe":recipe}
     )
+def recipe_edit(request, recipe_id):
+    recipe = Recipe.objects.get(id=recipe_id)
+    if request.method == "POST":
+        recipe.title = request.POST.get("title")
+        recipe.servings = request.POST.get("servings")
+        recipe.memo = request.POST.get("memo")
+        recipe.reference_url = request.POST.get("reference_url")
+        recipe.ingredients = request.POST.get("ingredients")
+        recipe.save()
+        
+        return redirect("recipe_detail", recipe_id=recipe.id)
+    
+    return render(
+        request,
+        "app/recipe_edit.html",
+        {"recipe":recipe}   
+    )
+
     
 def shoppinng_list(request):
     return render(request,"app/shopping_list.html")

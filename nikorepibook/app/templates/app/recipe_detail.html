@@ -20,26 +20,27 @@
       献立に追加
     </button>
 
-    <button class="add-button">
-      レシピを編集
-    </button>
+    <a href="{% url 'recipe_edit' recipe.id %}" class="add-button">
+    レシピを編集
+    </a>
 
     <h2>材料</h2>
 
     <p>{{ recipe.ingredients|linebreaksbr }}</p>
 
-    <h2>作り方</h2>
+  
 
-    <p>{{ recipe.steps|linebreaksbr }}</p>
+    <h2>参考URL</h2>
 
     <p class="recipe-url">
-        参考URL：
         {{ recipe.reference_url }}
     </p>
 
-    <textarea class="memo-box">
-       {{ recipe.memo }} 
-    </textarea>
+    <h2>メモ</h2>
+
+    <div class="memo-box">
+       {{ recipe.memo|linebreaksbr}} 
+    </div>
 
 
   </section>
