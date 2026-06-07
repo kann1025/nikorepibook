@@ -39,7 +39,10 @@ def recipe_edit(request, recipe_id):
         "app/recipe_edit.html",
         {"recipe":recipe}   
     )
-
+def recipe_delete(request, recipe_id):
+    recipe = Recipe.objects.get(id=recipe_id)
+    recipe.delete()
+    return redirect("home")
     
 def shoppinng_list(request):
     return render(request,"app/shopping_list.html")

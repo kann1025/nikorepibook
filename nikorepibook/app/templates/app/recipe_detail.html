@@ -24,6 +24,10 @@
     レシピを編集
     </a>
 
+    <a href="{% url 'recipe_delete' recipe.id %}" class="add-button">
+    レシピを削除
+    </a>
+
     <h2>材料</h2>
 
     <p>{{ recipe.ingredients|linebreaksbr }}</p>
