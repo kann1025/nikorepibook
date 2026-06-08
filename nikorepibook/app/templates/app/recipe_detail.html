@@ -29,10 +29,10 @@
     </a>
 
     <h2>材料</h2>
+    {% for ingredient in ingredients %}
+       <p>{{ ingredient.name }}　{{ ingredient.amount }}</p>
+    {% endfor %}
 
-    <p>{{ recipe.ingredients|linebreaksbr }}</p>
-
-  
 
     <h2>参考URL</h2>
 

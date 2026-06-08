@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Recipe
+from .models import Recipe,Ingredient
 
 # Create your views here.
 
@@ -17,27 +17,51 @@ def signup_view(request):
 
 def recipe_detail(request,recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
+    ingredients = Ingredient.objects.filter(recipe=recipe)
+
+    
     return render(
         request,
         "app/recipe_detail.html",
-        {"recipe":recipe}
+        {
+            "recipe":recipe,
+            "ingredients":ingredients}
     )
 def recipe_edit(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
+    ingredient = Ingredient.objects.filter(recipe=recipe).first()
+    
     if request.method == "POST":
         recipe.title = request.POST.get("title")
         recipe.servings = request.POST.get("servings")
         recipe.memo = request.POST.get("memo")
+        
         recipe.reference_url = request.POST.get("reference_url")
-        recipe.ingredients = request.POST.get("ingredients")
-        recipe.save()
+        
+        ingredient_name = request.POST.get("ingredient_name")
+        ingredient_amount = request.POST.get("ingredient_amount")
+        
+        if ingredient:
+            ingredient.name = ingredient_name
+            ingredient.amount = ingredient_amount
+            ingredient.save()
+            
+        else:
+           Ingredient.objects.create(
+               recipe=recipe,
+               name=ingredient_name,
+               amount=ingredient_amount,
+           )
         
         return redirect("recipe_detail", recipe_id=recipe.id)
     
     return render(
         request,
         "app/recipe_edit.html",
-        {"recipe":recipe}   
+        {
+            "recipe":recipe,
+            "ingredient":ingredient,
+            }   
     )
 def recipe_delete(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
@@ -65,15 +89,20 @@ def recipe_create(request):
        ingredient_name = request.POST.get("ingredient_name")
        ingredient_amount = request.POST.get("ingredient_amount")
        
-       ingredients = f"{ingredient_name} {ingredient_amount}"
        
-       Recipe.objects.create(
+       recipe = Recipe.objects.create(
             title=title,
             servings=servings,
             memo=memo,
             reference_url=reference_url,
-            ingredients=ingredients
+       )  
+       Ingredient.objects.create(
+            recipe=recipe,
+            name=ingredient_name,
+            amount=ingredient_amount,
        )
+       
+       
        return redirect("home")    
     return render(request,"app/recipe_create.html")
 
