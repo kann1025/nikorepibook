@@ -29,7 +29,7 @@ def recipe_detail(request,recipe_id):
     )
 def recipe_edit(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
-    ingredient = Ingredient.objects.filter(recipe=recipe).first()
+    ingredients = Ingredient.objects.filter(recipe=recipe)
     
     if request.method == "POST":
         recipe.title = request.POST.get("title")
@@ -38,21 +38,25 @@ def recipe_edit(request, recipe_id):
         
         recipe.reference_url = request.POST.get("reference_url")
         
-        ingredient_name = request.POST.get("ingredient_name")
-        ingredient_amount = request.POST.get("ingredient_amount")
+        ingredient_ids = request.POST.getlist("ingredient_id")
+        ingredient_names = request.POST.getlist("ingredient_name")
+        ingredient_amounts = request.POST.getlist("ingredient_amount")
         
-        if ingredient:
-            ingredient.name = ingredient_name
-            ingredient.amount = ingredient_amount
-            ingredient.save()
+        for ingredient_id, name, amount in zip(
+            ingredient_ids,
+            ingredient_names,
+            ingredient_amounts
+        ):
+            ingredient = Ingredient.objects.get(id=ingredient_id)
+             
+            ingredient.name = name
+            ingredient.amount = amount
             
-        else:
-           Ingredient.objects.create(
-               recipe=recipe,
-               name=ingredient_name,
-               amount=ingredient_amount,
-           )
-        
+            ingredient.save()
+
+
+        recipe.save()
+
         return redirect("recipe_detail", recipe_id=recipe.id)
     
     return render(
@@ -60,7 +64,7 @@ def recipe_edit(request, recipe_id):
         "app/recipe_edit.html",
         {
             "recipe":recipe,
-            "ingredient":ingredient,
+            "ingredients":ingredients,
             }   
     )
 def recipe_delete(request, recipe_id):
