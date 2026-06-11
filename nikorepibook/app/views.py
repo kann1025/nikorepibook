@@ -42,6 +42,8 @@ def recipe_edit(request, recipe_id):
         ingredient_names = request.POST.getlist("ingredient_name")
         ingredient_amounts = request.POST.getlist("ingredient_amount")
         
+        delete_ingredient_ids = request.POST.getlist("delete_ingredient_id")
+        
         new_ingredient_names = request.POST.getlist("new_ingredient_name")
         new_ingredient_amounts = request.POST.getlist("new_ingredient_amount")
         
@@ -51,11 +53,14 @@ def recipe_edit(request, recipe_id):
             ingredient_amounts
         ):
             ingredient = Ingredient.objects.get(id=ingredient_id)
-             
-            ingredient.name = name
-            ingredient.amount = amount
             
-            ingredient.save()
+            if ingredient_id in delete_ingredient_ids:
+                ingredient.delete()
+            else:
+                ingredient.name = name
+                ingredient.amount = amount
+                ingredient.save()
+  
             
         for name, amount in zip(
             new_ingredient_names, 
