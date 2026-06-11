@@ -30,7 +30,11 @@
 
     <h2>材料</h2>
     {% for ingredient in ingredients %}
-       <p>{{ ingredient.name }}　{{ ingredient.amount }}</p>
+       <p>
+          {{ ingredient.name }}
+          {{ ingredient.calculated_quantity }}
+           ({{ ingredient.amount }})
+        </p>
     {% endfor %}
 
 

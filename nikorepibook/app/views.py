@@ -18,6 +18,15 @@ def signup_view(request):
 def recipe_detail(request,recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
     ingredients = Ingredient.objects.filter(recipe=recipe)
+    
+    family_servings = 2
+    
+    for ingredient in ingredients:
+        ingredient.calculated_quantity = (
+            ingredient.base_quantity
+            * family_servings
+            / recipe.servings
+        )
 
     
     return render(
@@ -25,8 +34,11 @@ def recipe_detail(request,recipe_id):
         "app/recipe_detail.html",
         {
             "recipe":recipe,
-            "ingredients":ingredients}
-    )
+            "ingredients":ingredients,
+            "family_servings": family_servings,
+    })
+    
+    
 def recipe_edit(request, recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
     ingredients = Ingredient.objects.filter(recipe=recipe)
@@ -59,6 +71,8 @@ def recipe_edit(request, recipe_id):
             else:
                 ingredient.name = name
                 ingredient.amount = amount
+                ingredient.base_quantity = amount
+                
                 ingredient.save()
   
             
@@ -70,7 +84,8 @@ def recipe_edit(request, recipe_id):
                 Ingredient.objects.create(
                     recipe=recipe,
                     name=name,
-                    amount=amount
+                    amount=amount,
+                    base_quantity=amount,
                 )
             
 
@@ -126,6 +141,7 @@ def recipe_create(request):
                     recipe=recipe,
                     name=name,
                     amount=amount,
+                    base_quantity=amount,
                  )
        
        return redirect("home")    
