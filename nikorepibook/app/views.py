@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Recipe,Ingredient
+from .models import Recipe,Ingredient,UserProfile
 
 # Create your views here.
 
@@ -19,7 +19,9 @@ def recipe_detail(request,recipe_id):
     recipe = Recipe.objects.get(id=recipe_id)
     ingredients = Ingredient.objects.filter(recipe=recipe)
     
-    family_servings = 2
+    profile = UserProfile.objects.get(user=request.user)
+    
+    family_servings = profile.adult_count + (profile.child_count * 0.5)
     
     for ingredient in ingredients:
         ingredient.calculated_quantity = (
@@ -112,8 +114,6 @@ def shoppinng_list(request):
 def calendar_view(request):
     return render(request, "app/calendar.html")
 
-def mypage(request):
-    return render(request, "app/mypage.html")
 
 def calendar_add(request):
     return render(request,"app/calendar_add.html")
@@ -147,5 +147,28 @@ def recipe_create(request):
        return redirect("home")    
     return render(request,"app/recipe_create.html")
 
+def mypage(request):
+    profile, created = UserProfile.objects.get_or_create(
+        user=request.user
+    )
+    
+    return render(request, "app/mypage.html",{
+        "profile":profile
+    })
+
+
 def mypage_edit(request):
-    return render(request,"app/mypage_edit.html")
+    profile, created = UserProfile.objects.get_or_create(
+        user=request.user
+    )
+    
+    if request.method == "POST":
+        profile.adult_count = request.POST.get("adult_count")
+        profile.child_count = request.POST.get("child_count")
+        profile.save()
+        
+        return redirect("mypage")
+        
+    return render(request,"app/mypage_edit.html",{
+        "profile": profile
+    })

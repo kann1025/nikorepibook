@@ -14,29 +14,37 @@
       👤
     </div>
 
-    <label>ニックネーム</label>
-    <input type="text" value="かじかな">
+    <form method="post">
+        {% csrf_token %}
+        <label>ニックネーム</label>
+        <input
+        type="text"
+        value="{{ request.user.username }}"
+        readonly
+        >
 
-    <label>大人</label>
-    <select>
-      <option>1</option>
-      <option selected>2</option>
-      <option>3</option>
-      <option>4</option>
-    </select>
+        <label>大人</label>
+        <select name="adult_count">
+            <option value="1" {% if profile.adult_count == 1 %}selected{% endif %}>1</option>
+            <option value="2" {% if profile.adult_count == 2 %}selected{% endif %}>2</option>
+            <option value="3" {% if profile.adult_count == 3 %}selected{% endif %}>3</option>
+            <option value="4" {% if profile.adult_count == 4 %}selected{% endif %}>4</option>
+        </select>
 
-    <label>こども</label>
-    <select>
-      <option>0</option>
-      <option>1</option>
-      <option selected>2</option>
-      <option>3</option>
-      <option>4</option>
-    </select>
+        <label>こども</label>
+        <select name="child_count">
+            <option value="0" {% if profile.child_count == 0 %}selected{% endif %}>0</option>
+            <option value="1" {% if profile.child_count == 1 %}selected{% endif %}>1</option>
+            <option value="2" {% if profile.child_count == 2 %}selected{% endif %}>2</option>
+            <option value="3" {% if profile.child_count == 3 %}selected{% endif %}>3</option>
+            <option value="4" {% if profile.child_count == 4 %}selected{% endif %}>4</option>
+        </select>
 
-    <a href="/mypage/" class="save-button">
-      保存
-    </a>
+        <button type="submit" class="save-button">
+          保存
+        </button>
+
+    </from>
 
   </section>
 
