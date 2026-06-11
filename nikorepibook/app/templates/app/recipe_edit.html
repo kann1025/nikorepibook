@@ -35,7 +35,46 @@
                         <input type="checkbox">
 
                     </div>
+
                 {% endfor %}
+
+                    <div id="new-ingredient-list"></div>
+
+                    <button
+                    type="button"
+                    id="add-ingredient-button">
+                    ＋材料を追加
+                    </button>
+
+                    <script>
+                    document
+                    .getElementById("add-ingredient-button")
+                    .addEventListener("click", function() {
+
+                        const ingredientList =
+                        document.getElementById("new-ingredient-list");
+
+                        const newIngredient =
+                        document.createElement("div");
+
+                        newIngredient.className = "ingredient-item";
+
+                        newIngredient.innerHTML = `
+                            <input
+                            type="text"
+                            name="new_ingredient_name"
+                            placeholder="材料名">
+
+                            <input
+                            type="text"
+                            name="new_ingredient_amount"
+                            placeholder="分量">
+                        `;
+
+                        ingredientList.appendChild(newIngredient);
+                    });
+                    </script>
+
                
             </p>
 

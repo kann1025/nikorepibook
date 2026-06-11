@@ -42,6 +42,9 @@ def recipe_edit(request, recipe_id):
         ingredient_names = request.POST.getlist("ingredient_name")
         ingredient_amounts = request.POST.getlist("ingredient_amount")
         
+        new_ingredient_names = request.POST.getlist("new_ingredient_name")
+        new_ingredient_amounts = request.POST.getlist("new_ingredient_amount")
+        
         for ingredient_id, name, amount in zip(
             ingredient_ids,
             ingredient_names,
@@ -53,7 +56,18 @@ def recipe_edit(request, recipe_id):
             ingredient.amount = amount
             
             ingredient.save()
-
+            
+        for name, amount in zip(
+            new_ingredient_names, 
+            new_ingredient_amounts 
+        ):
+            if name != "" or amount != "":
+                Ingredient.objects.create(
+                    recipe=recipe,
+                    name=name,
+                    amount=amount
+                )
+            
 
         recipe.save()
 
