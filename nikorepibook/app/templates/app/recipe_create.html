@@ -35,26 +35,31 @@
     </div>
 
     <h2>材料</h2>
+    <div id="ingredient-list">
 
-    <div class="ingredient-item">
-      <input type="text" name="ingredient_name"
-      placeholder="材料名">
-      <input type="text"  name="ingredient_amount"
-      placeholder="分量">
+      <div class="ingredient-item">
+        <input type="text" name="ingredient_name"
+        placeholder="材料名">
+        <input type="text"  name="ingredient_amount"
+        placeholder="分量">
 
-      <input type="checkbox">
-    </div>
+        <input type="checkbox">
+      </div>
 
-    <div class="ingredient-item">
-      <input type="text" name="ingredient_name"
-      placeholder="材料名">
-      <input type="text"  name="ingredient_amount"
-      placeholder="分量">
+      <div class="ingredient-item">
+        <input type="text" name="ingredient_name"
+        placeholder="材料名">
+        <input type="text"  name="ingredient_amount"
+        placeholder="分量">
       
-      <input type="checkbox">
+        <input type="checkbox">
+      </div>
+
     </div>
 
-   
+    <button type="button" id="add-ingredient-button">
+    ＋材料を追加
+    </button>
 
     <label>参考URL</label>
     <input type="url" name="reference_url"
@@ -77,5 +82,27 @@
 </form>
 
 </div>
+
+<script>
+document.getElementById("add-ingredient-button").addEventListener("click", function() {
+
+    const ingredientList = document.getElementById("ingredient-list");
+
+    const newIngredient = document.createElement("div");
+
+    newIngredient.className = "ingredient-item";
+
+    newIngredient.innerHTML = `
+        <input type="text" name="ingredient_name" placeholder="材料名">
+
+        <input type="text" name="ingredient_amount" placeholder="分量">
+
+        <input type="checkbox">
+    `;
+
+    ingredientList.appendChild(newIngredient);
+
+});
+</script>
 
 {% endblock %}
