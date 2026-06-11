@@ -86,8 +86,8 @@ def recipe_create(request):
        servings = request.POST.get("servings")
        memo = request.POST.get("memo")
        reference_url = request.POST.get("reference_url")
-       ingredient_name = request.POST.get("ingredient_name")
-       ingredient_amount = request.POST.get("ingredient_amount")
+       ingredient_names = request.POST.getlist("ingredient_name")
+       ingredient_amounts = request.POST.getlist("ingredient_amount")
        
        
        recipe = Recipe.objects.create(
@@ -96,12 +96,14 @@ def recipe_create(request):
             memo=memo,
             reference_url=reference_url,
        )  
-       Ingredient.objects.create(
-            recipe=recipe,
-            name=ingredient_name,
-            amount=ingredient_amount,
-       )
        
+       for name, amount in zip(ingredient_names, ingredient_amounts):
+            if name and amount:
+                 Ingredient.objects.create(
+                    recipe=recipe,
+                    name=name,
+                    amount=amount,
+                 )
        
        return redirect("home")    
     return render(request,"app/recipe_create.html")
