@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import Recipe,Ingredient,UserProfile
+from decimal import Decimal
 
 # Create your views here.
 
@@ -21,14 +22,23 @@ def recipe_detail(request,recipe_id):
     
     profile = UserProfile.objects.get(user=request.user)
     
-    family_servings = profile.adult_count + (profile.child_count * 0.5)
+    family_servings = (
+        Decimal(profile.adult_count)
+        + (Decimal(profile.child_count) * Decimal("0.5"))
+        )
     
     for ingredient in ingredients:
-        ingredient.calculated_quantity = (
+        calculated_quantity = (
             ingredient.base_quantity
             * family_servings
             / recipe.servings
         )
+        
+        if ingredient.is_integer_only:
+            calculated_quantity = int(calculated_quantity)
+            
+        ingredient.calculated_quantity = calculated_quantity
+
 
     
     return render(
@@ -55,6 +65,7 @@ def recipe_edit(request, recipe_id):
         ingredient_ids = request.POST.getlist("ingredient_id")
         ingredient_names = request.POST.getlist("ingredient_name")
         ingredient_amounts = request.POST.getlist("ingredient_amount")
+        integer_only_ids = request.POST.getlist("is_integer_only")
         
         delete_ingredient_ids = request.POST.getlist("delete_ingredient_id")
         
@@ -74,6 +85,7 @@ def recipe_edit(request, recipe_id):
                 ingredient.name = name
                 ingredient.amount = amount
                 ingredient.base_quantity = amount
+                ingredient.is_integer_only = ingredient_id in integer_only_ids
                 
                 ingredient.save()
   

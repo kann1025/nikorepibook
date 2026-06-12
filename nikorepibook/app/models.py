@@ -21,6 +21,9 @@ class Ingredient(models.Model):
         decimal_places=2,
         default=0
     )
+    is_integer_only = models.BooleanField(
+        default=False
+    )
 
     def __str__(self):
         return self.name

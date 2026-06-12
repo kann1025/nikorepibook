@@ -32,7 +32,12 @@
                         <input type="text" name="ingredient_name" value="{{ ingredient.name }}" placeholder="材料名">
                         <input type="text" name="ingredient_amount" value="{{ ingredient.amount }}" placeholder="分量">
 
-                        <input type="checkbox">
+                        <input 
+                        type="checkbox"
+                        name="is_integer_only"
+                        value="{{ ingredient.id }}"
+                        {% if ingredient.is_integer_only %}checked{% endif %}>
+                        
                         <label>
                             <input
                             type="checkbox"
