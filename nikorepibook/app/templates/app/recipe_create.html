@@ -40,19 +40,40 @@
       <div class="ingredient-item">
         <input type="text" name="ingredient_name"
         placeholder="材料名">
-        <input type="text"  name="ingredient_amount"
+
+        <input type="text"
+        name="ingredient_amount"
         placeholder="分量">
 
-        <input type="checkbox">
+        <input
+        type="text"
+        name="ingredient_unit"
+        placeholder="単位"
+        >
+
+        <input
+        type="checkbox"
+        name="is_integer_only"
+        value="0">
       </div>
 
       <div class="ingredient-item">
         <input type="text" name="ingredient_name"
         placeholder="材料名">
+
         <input type="text"  name="ingredient_amount"
         placeholder="分量">
+
+        <input
+        type="text"
+        name="ingredient_unit"
+        placeholder="単位"
+        >
       
-        <input type="checkbox">
+        <input
+        type="checkbox"
+        name="is_integer_only"
+        value="1">
       </div>
 
     </div>
@@ -92,12 +113,27 @@ document.getElementById("add-ingredient-button").addEventListener("click", funct
 
     newIngredient.className = "ingredient-item";
 
+    const ingredientIndex = document.querySelectorAll(".ingredient-item").length;
+    
     newIngredient.innerHTML = `
-        <input type="text" name="ingredient_name" placeholder="材料名">
+        <input
+        type="text"
+        name="ingredient_name"
+        placeholder="材料名">
 
-        <input type="text" name="ingredient_amount" placeholder="分量">
+        <input type="text"
+        name="ingredient_amount"
+        placeholder="分量">
 
-        <input type="checkbox">
+        <input
+        type="text"
+        name="ingredient_unit"
+        placeholder="単位">
+
+        <input
+        type="checkbox"
+        name="is_integer_only"
+        value="${ingredientIndex}">
     `;
 
     ingredientList.appendChild(newIngredient);

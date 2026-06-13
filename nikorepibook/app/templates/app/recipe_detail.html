@@ -32,8 +32,8 @@
     {% for ingredient in ingredients %}
        <p>
           {{ ingredient.name }}
-          {{ ingredient.calculated_quantity }}
-           ({{ ingredient.amount }})
+          {{ ingredient.calculated_quantity }}{{ ingredient.unit }}
+           ({{ ingredient.amount }}{{ ingredient.unit }})
         </p>
     {% endfor %}
 

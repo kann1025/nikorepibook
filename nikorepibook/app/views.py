@@ -38,6 +38,11 @@ def recipe_detail(request,recipe_id):
             calculated_quantity = int(calculated_quantity)
             
         ingredient.calculated_quantity = calculated_quantity
+        
+        if calculated_quantity == int(calculated_quantity):
+            ingredient.calculated_quantity = int(calculated_quantity)
+        else:
+            ingredient.calculated_quantity = calculated_quantity
 
 
     
@@ -65,17 +70,21 @@ def recipe_edit(request, recipe_id):
         ingredient_ids = request.POST.getlist("ingredient_id")
         ingredient_names = request.POST.getlist("ingredient_name")
         ingredient_amounts = request.POST.getlist("ingredient_amount")
+        ingredient_units = request.POST.getlist("ingredient_unit")
         integer_only_ids = request.POST.getlist("is_integer_only")
         
         delete_ingredient_ids = request.POST.getlist("delete_ingredient_id")
         
         new_ingredient_names = request.POST.getlist("new_ingredient_name")
         new_ingredient_amounts = request.POST.getlist("new_ingredient_amount")
+        new_ingredient_units = request.POST.getlist("new_ingredient_unit")
+        new_integer_only_list = request.POST.getlist("new_is_integer_only")
         
-        for ingredient_id, name, amount in zip(
+        for ingredient_id, name, amount,unit in zip(
             ingredient_ids,
             ingredient_names,
-            ingredient_amounts
+            ingredient_amounts,
+            ingredient_units,
         ):
             ingredient = Ingredient.objects.get(id=ingredient_id)
             
@@ -85,21 +94,28 @@ def recipe_edit(request, recipe_id):
                 ingredient.name = name
                 ingredient.amount = amount
                 ingredient.base_quantity = amount
+                ingredient.unit = unit
                 ingredient.is_integer_only = ingredient_id in integer_only_ids
                 
                 ingredient.save()
   
             
-        for name, amount in zip(
+        for index, (name, amount,unit) in enumerate ( zip(
             new_ingredient_names, 
-            new_ingredient_amounts 
-        ):
+            new_ingredient_amounts,
+            new_ingredient_units 
+        )):
             if name != "" or amount != "":
                 Ingredient.objects.create(
                     recipe=recipe,
                     name=name,
                     amount=amount,
                     base_quantity=amount,
+                    unit=unit,
+                    is_integer_only=(
+                        str(index)
+                        in new_integer_only_list
+                    )
                 )
             
 
@@ -138,6 +154,8 @@ def recipe_create(request):
        reference_url = request.POST.get("reference_url")
        ingredient_names = request.POST.getlist("ingredient_name")
        ingredient_amounts = request.POST.getlist("ingredient_amount")
+       ingredient_units = request.POST.getlist("ingredient_unit")
+       integer_only_list = request.POST.getlist("is_integer_only")
        
        
        recipe = Recipe.objects.create(
@@ -147,13 +165,16 @@ def recipe_create(request):
             reference_url=reference_url,
        )  
        
-       for name, amount in zip(ingredient_names, ingredient_amounts):
+       for index,(name, amount,unit) in enumerate ( 
+            zip(ingredient_names, ingredient_amounts,ingredient_units)):
             if name and amount:
                  Ingredient.objects.create(
                     recipe=recipe,
                     name=name,
                     amount=amount,
+                    unit=unit,
                     base_quantity=amount,
+                    is_integer_only=str(index) in integer_only_list,
                  )
        
        return redirect("home")    

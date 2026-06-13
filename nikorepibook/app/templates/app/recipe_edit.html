@@ -31,6 +31,7 @@
                         <input type="hidden" name="ingredient_id" value="{{ ingredient.id }}">
                         <input type="text" name="ingredient_name" value="{{ ingredient.name }}" placeholder="材料名">
                         <input type="text" name="ingredient_amount" value="{{ ingredient.amount }}" placeholder="分量">
+                        <input type="text" name="ingredient_unit" value="{{ ingredient.unit }}" placeholder="単位">
 
                         <input 
                         type="checkbox"
@@ -64,13 +65,16 @@
                     .addEventListener("click", function() {
 
                         const ingredientList =
-                        document.getElementById("new-ingredient-list");
+                          document.getElementById("new-ingredient-list");
 
                         const newIngredient =
-                        document.createElement("div");
+                          document.createElement("div");
 
-                        newIngredient.className = "ingredient-item";
+                          newIngredient.className = "ingredient-item";
 
+                        const newIngredientIndex =
+                          document.querySelectorAll("#new-ingredient-list .ingredient-item").length;
+                        
                         newIngredient.innerHTML = `
                             <input
                             type="text"
@@ -81,6 +85,17 @@
                             type="text"
                             name="new_ingredient_amount"
                             placeholder="分量">
+
+                            <input
+                            type="text" 
+                            name="new_ingredient_unit"
+                            placeholder="単位">
+
+                            <input
+                            type="checkbox"
+                            name="new_is_integer_only"
+                            value="${newIngredientIndex}">
+
                         `;
 
                         ingredientList.appendChild(newIngredient);
