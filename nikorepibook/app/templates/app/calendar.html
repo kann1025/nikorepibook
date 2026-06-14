@@ -11,52 +11,47 @@
   <section class="calendar-section">
 
     <div class="calendar-header">
-      <a href="#">＜</a>
-      <span>2026年3月</span>
-      <a href="#">＞</a>
+      <a href="?year={{ prev_year }}&month={{ prev_month }}">
+        ＜</a>
+      <span>{{ year }}年{{ month }}月</span>
+
+      <a href="?year={{ next_year }}&month={{ next_month }}">
+        ＞</a>
     </div>
 
     <div class="calendar-grid">
-      <div class="day-name">日</div>
-      <div class="day-name">月</div>
-      <div class="day-name">火</div>
-      <div class="day-name">水</div>
-      <div class="day-name">木</div>
-      <div class="day-name">金</div>
-      <div class="day-name">土</div>
+        <div class="day-name">日</div>
+        <div class="day-name">月</div>
+        <div class="day-name">火</div>
+        <div class="day-name">水</div>
+        <div class="day-name">木</div>
+        <div class="day-name">金</div>
+        <div class="day-name">土</div>
 
-      <div class="day muted">1</div>
-      <div class="day muted">2</div>
-      <div class="day">3</div>
-      <div class="day">4</div>
-      <div class="day today">5</div>
-      <div class="day">6</div>
-      <div class="day">7</div>
 
-      <div class="day">8</div>
-      <div class="day">9</div>
-      <a href="/calendar_add/" class="day has-menu">
-        10
-        
-        {% for menu in menus %}
-            {% if menu.planned_date|date:"Y-m-d" == "2026-03-10" %}
-                <br>
-                <span>{{ menu.recipe.title }}</span>
-            {% endif %}
+        {% for week in calendar_weeks %}
+             {% for day in week %}
+
+                <a
+                    href="{% url 'calendar_add' %}?date={{ day.date|date:'Y-m-d' }}"
+                    class="day {% if not day.is_current_month %}muted{% endif %} {% if day.is_today %}today{% endif %} {% if day.menus %}has-menu{% endif %}"
+                >
+
+                  {{ day.day }}
+
+                  {% for menu in day.menus %}
+                       <br>
+                       <span>{{ menu.recipe.title }}</span>
+                  {% endfor %}
+                </a>
+             {% endfor %}
         {% endfor %}
-      </a>
-      <div class="day">11</div>
-      <div class="day">12</div>
-      <div class="day">13</div>
-      <div class="day">14</div>
 
-      <div class="day">15</div>
-      <div class="day">16</div>
-      <div class="day">17</div>
-      <div class="day">18</div>
-      <div class="day">19</div>
-      <div class="day">20</div>
-      <div class="day">21</div>
+                
+
+
+
+
     </div>
 
     

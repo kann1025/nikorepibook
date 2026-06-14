@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from .models import Recipe,Ingredient,UserProfile,ShoppingItem,Menu
 from decimal import Decimal
+import calendar
+from datetime import date
 
 # Create your views here.
 
@@ -165,24 +167,72 @@ def shoppinng_list(request):
     )
 
 def calendar_view(request):
-    menus = Menu.objects.all()
+    today = date.today()
     
+    year = int(request.GET.get("year", today.year))
+    month = int(request.GET.get("month", today.month))
+    
+    if month == 1:
+        prev_year = year - 1
+        prev_month = 12
+    else:
+        prev_year = year
+        prev_month = month - 1
+        
+    if month == 12:
+        next_year = year + 1
+        next_month = 1
+    else:
+        next_year = year
+        next_month = month + 1
+        
+    cal = calendar.Calendar(firstweekday=6)
+    weeks = cal.monthdatescalendar(year,month)
+    
+    menus  = Menu.objects.filter(
+        planned_date__year=year,
+        planned_date__month=month
+    )
+    
+    calendar_weeks = []
+    
+    for week in weeks:
+        week_data = []
+        
+        for day in week:
+            day_menus = menus.filter(planned_date=day)
+            
+            week_data.append({
+                "date": day,
+                "day": day.day,
+                "is_current_month": day.month == month,
+                "is_today": day == today,
+                "menus": day_menus,
+            })
+        calendar_weeks.append(week_data)
+        
     return render(
         request,
         "app/calendar.html",
         {
-            "menus": menus
+            "calendar_weeks": calendar_weeks,
+            "year": year,
+            "month": month,
+            "prev_year": prev_year,
+            "prev_month": prev_month,
+            "next_year": next_year,
+            "next_month": next_month,
         }
     )
-
-
+    
+    
 def calendar_add(request):
     recipes = Recipe.objects.all()
     planned_date = request.GET.get("date","2026-03-10")
     
     if request.method == "POST":
         recipe_ids = request.POST.getlist("recipe_ids")
-        planned_date = request.POST.get("planned_date","2026-03-10")
+        planned_date = request.POST.get("planned_date")
         
         for recipe_id in recipe_ids:
             recipe = Recipe.objects.get(id=recipe_id)
