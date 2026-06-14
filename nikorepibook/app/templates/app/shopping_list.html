@@ -21,29 +21,28 @@
     </div>
 
     <ul class="shopping-list">
-      <li>
-        <input type="checkbox">
-        <span>卵</span>
-        <span class="amount">2個</span>
-      </li>
 
-      <li class="checked-item">
-        <input type="checkbox" checked>
-        <span>鶏肉</span>
-        <span class="amount">150g</span>
-      </li>
+      {% for item in shopping_items %}
 
       <li>
         <input type="checkbox">
-        <span>玉ねぎ</span>
-        <span class="amount">1/4個</span>
+
+        <span>{{ item.name }}</span>
+
+        <span class="amount">
+          {{ item.quantity }}{{ item.unit }}
+        </span>
       </li>
 
+      {% empty %}
+
       <li>
-        <input type="checkbox">
-        <span>人参</span>
-        <span class="amount">50g</span>
+        買い物リストはありません
       </li>
+
+      {% endfor %}
+
+    
     </ul>
   </section>
 </div>

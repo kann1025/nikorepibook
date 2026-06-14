@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Recipe,Ingredient,UserProfile
+from .models import Recipe,Ingredient,UserProfile,ShoppingItem,Menu
 from decimal import Decimal
 
 # Create your views here.
@@ -137,14 +137,72 @@ def recipe_delete(request, recipe_id):
     return redirect("home")
     
 def shoppinng_list(request):
-    return render(request,"app/shopping_list.html")
+    menus = Menu.objects.all()
+    
+    shopping_items = {}
+    
+    for menu in menus:
+        ingredients = Ingredient.objects.filter(recipe=menu.recipe)
+        
+        for ingredient in ingredients:
+            key = ingredient.name + ingredient.unit
+            
+            if key not in shopping_items:
+                shopping_items[key] = {
+                    "name": ingredient.name,
+                    "quantity": ingredient.base_quantity,
+                    "unit": ingredient.unit,
+                }
+            else:
+                shopping_items[key]["quantity"] += ingredient.base_quantity
+    
+    return render(
+        request,
+        "app/shopping_list.html",
+        {
+         "shopping_items": shopping_items.values()
+        }
+    )
 
 def calendar_view(request):
-    return render(request, "app/calendar.html")
+    menus = Menu.objects.all()
+    
+    return render(
+        request,
+        "app/calendar.html",
+        {
+            "menus": menus
+        }
+    )
 
 
 def calendar_add(request):
-    return render(request,"app/calendar_add.html")
+    recipes = Recipe.objects.all()
+    planned_date = request.GET.get("date","2026-03-10")
+    
+    if request.method == "POST":
+        recipe_ids = request.POST.getlist("recipe_ids")
+        planned_date = request.POST.get("planned_date","2026-03-10")
+        
+        for recipe_id in recipe_ids:
+            recipe = Recipe.objects.get(id=recipe_id)
+            
+            Menu.objects.create(
+                user_id=1,
+                recipe=recipe,
+                planned_date=planned_date
+            )
+            
+        return redirect("calendar")
+    
+    return render(
+        request,
+        "app/calendar_add.html",
+        {
+            "recipes":recipes,
+            "planned_date": planned_date
+        }
+    )
 
 def recipe_create(request):
     if request.method == "POST":

@@ -10,36 +10,59 @@
 
   <section>
 
-    <h2>レシピを選択</h2>
+    <form method="POST">
+      {% csrf_token %}
 
-    <input
-      type="text"
-      placeholder="レシピ検索"
-    >
+      <input
+      type="hidden"
+      name="planned_date"
+      value="{{ planned_date }}"
+      >
 
-    <div class="calendar-recipe-list">
 
-      <div class="calendar-recipe-item">
+      <h2>レシピを選択</h2>
 
-        <input type="checkbox">
-        <a href="/recipe/" class="recipe-link">
-          <div class="recipe-image">🍳</div>
-          <p>シンプルオムライス</p>
-        </a>
+      <input
+        type="text"
+        placeholder="レシピ検索"
+      >
+
+      <div class="calendar-recipe-list">
+
+        {% for recipe in recipes %}
+
+        <div class="calendar-recipe-item">
+
+          <input
+             type="checkbox"
+             name="recipe_ids"
+             value="{{ recipe.id }}"
+          >
+
+          <a 
+             href="{% url 'recipe_detail' recipe.id %}"
+             class="recipe-link"
+          >
+            <div class="recipe-image">🍳</div>
+            <p>{{ recipe.title }}</p>
+          </a>
+        </div>
+
+        {% empty %}
+
+        <p>レシピがありません</p>
+
+        {% endfor %}
+
+     
       </div>
 
-      <div class="calendar-recipe-item">
+      <button type="submit">
+      追加
+      </button>
 
-        <input type="checkbox">
-        <a href="/recipe/" class="recipe-link">
-          <div class="recipe-image">🍗</div>
-          <p>鶏肉と野菜炒め</p>
-       </a>
-      </div>
-
-    </div>
-
-  </section>
+    </form>
+    </section>
 
 </div>
 
