@@ -230,9 +230,22 @@ def calendar_add(request):
     recipes = Recipe.objects.all()
     planned_date = request.GET.get("date","2026-03-10")
     
+    selected_menus = Menu.objects.filter(
+        planned_date=planned_date
+    )
+    
+    selected_recipe_ids = selected_menus.values_list(
+        "recipe_id",
+        flat=True
+    )
+    
     if request.method == "POST":
         recipe_ids = request.POST.getlist("recipe_ids")
         planned_date = request.POST.get("planned_date")
+        
+        Menu.objects.filter(
+            planned_date=planned_date
+        ).delete()
         
         for recipe_id in recipe_ids:
             recipe = Recipe.objects.get(id=recipe_id)
@@ -250,7 +263,8 @@ def calendar_add(request):
         "app/calendar_add.html",
         {
             "recipes":recipes,
-            "planned_date": planned_date
+            "planned_date": planned_date,
+            "selected_recipe_ids": selected_recipe_ids,
         }
     )
 

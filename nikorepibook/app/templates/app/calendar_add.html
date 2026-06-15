@@ -37,6 +37,9 @@
              type="checkbox"
              name="recipe_ids"
              value="{{ recipe.id }}"
+             {% if recipe.id in selected_recipe_ids %}
+                  checked
+             {% endif %}
           >
 
           <a 
