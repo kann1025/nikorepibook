@@ -10,11 +10,27 @@
   <section class="shopping-section">
     <p class="section-label">期間を選択</p>
 
-    <div class="date-range">
-      <input type="date" value="2026-03-10">
-      <span>〜</span>
-      <input type="date" value="2026-03-15">
-    </div>
+    <form method="GET">
+      <div class="date-range">
+        <input
+           type="date"
+           name="start_date"
+           value="{{ start_date }}"
+        >
+
+        <span>〜</span>
+
+        <input
+           type="date"
+           name="end_date"
+           value="{{ end_date }}"
+        >
+      </div>
+
+      <button type="submit">
+        表示
+      </button>
+    </form>
 
     <div class="selected-recipes">
       <div class="small-recipe-image">🍳</div>
@@ -25,12 +41,16 @@
       {% for item in shopping_items %}
 
       <li>
-        <input type="checkbox">
+        <input
+            type="checkbox"
+            data-item-id="{{ item.id }}"
+            {% if item.is_checked %}checked{% endif %}
+            >
 
         <span>{{ item.name }}</span>
 
         <span class="amount">
-          {{ item.quantity }}{{ item.unit }}
+          {{ item.total_quantity }}{{ item.unit }}
         </span>
       </li>
 
@@ -46,5 +66,22 @@
     </ul>
   </section>
 </div>
+
+<script>
+  document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox){
+
+    checkbox.addEventListener('change', function(){
+       
+       const itemId = this.dataset.itemId;
+
+       fetch(`/shopping-item/${itemId}/toggle/`)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+          });
+    });
+  });
+</script>
+
 
 {% endblock %}

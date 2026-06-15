@@ -3,6 +3,7 @@ from .models import Recipe,Ingredient,UserProfile,ShoppingItem,Menu
 from decimal import Decimal
 import calendar
 from datetime import date
+from django.http import JsonResponse
 
 # Create your views here.
 
@@ -139,7 +140,23 @@ def recipe_delete(request, recipe_id):
     return redirect("home")
     
 def shoppinng_list(request):
-    menus = Menu.objects.all()
+    
+    start_date = request.GET.get(
+        "start_date",
+        date.today().strftime("%Y-%m-%d")
+    )
+    
+    end_date = request.GET.get(
+        "end_date",
+        date.today().strftime("%Y-%m-%d")
+    )
+    
+    menus = Menu.objects.filter(
+        planned_date__range=[
+            start_date,
+            end_date
+        ]
+    )
     
     shopping_items = {}
     
@@ -157,12 +174,25 @@ def shoppinng_list(request):
                 }
             else:
                 shopping_items[key]["quantity"] += ingredient.base_quantity
+            
+            for item in shopping_items.values():
+                ShoppingItem.objects.update_or_create(
+                    user_id=1,
+                    name=item["name"],
+                    unit=item["unit"],
+                    defaults={
+                        "total_quantity": item["quantity"],
+                    }
+                )
+            saved_items = ShoppingItem.objects.filter(user_id=1)
     
     return render(
         request,
         "app/shopping_list.html",
         {
-         "shopping_items": shopping_items.values()
+         "shopping_items": saved_items,
+         "start_date": start_date,
+         "end_date": end_date,
         }
     )
 
@@ -326,4 +356,15 @@ def mypage_edit(request):
         
     return render(request,"app/mypage_edit.html",{
         "profile": profile
+    })
+    
+def toggle_shopping_item(request, item_id):
+    item = ShoppingItem.objects.get(id=item_id)
+    
+    item.is_checked = not item.is_checked
+    item.save()
+    
+    return JsonResponse({
+        "success": True,
+        "is_checked": item.is_checked
     })

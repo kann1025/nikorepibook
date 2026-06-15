@@ -27,6 +27,11 @@ urlpatterns = [
          views.recipe_create,name="recipe_create"),
     path("mypage_edit/",
          views.mypage_edit,name="mypage_edit"),
+    path(
+         "shopping-item/<int:item_id>/toggle/",
+         views.toggle_shopping_item,
+         name="toggle_shopping_item"
+    ),
     
     
     
