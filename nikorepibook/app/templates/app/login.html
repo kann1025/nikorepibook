@@ -6,14 +6,20 @@
   <div class="login-card">
     <h1>にこれぴbook</h1>
 
-    <label>メールアドレス</label>
-    <input type="email" placeholder="test@test.com">
+    <form method="post">
+        {% csrf_token %}
+    
+     <label>メールアドレス</label>
+     <input type="email" name="email" placeholder="test@test.com">
 
-    <label>パスワード</label>
-    <input type="password" placeholder="********">
+     <label>パスワード</label>
+     <input type="password" name="password" placeholder="********">
 
-    <a href="/" class="login-button">ログイン</a>
+     <button type="submit" class="login-button">ログイン</button>
 
+    </form>
+    
+    
     <a href="/signup/" class="link">新規登録はこちら</a>
     
     <a href="#" class="link">パスワードを忘れた方はこちら</a>

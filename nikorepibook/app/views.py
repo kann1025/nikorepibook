@@ -1,26 +1,68 @@
 from django.shortcuts import render,redirect
 from .models import Recipe,Ingredient,UserProfile,ShoppingItem,Menu
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 from decimal import Decimal
 import calendar
 from datetime import date
 from django.http import JsonResponse
-
-# Create your views here.
-
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def home(request):
-    recipes = Recipe.objects.all()
+    recipes = Recipe.objects.filter(
+        user=request.user
+    )
     return render(request,"app/home.html",{'recipes':recipes})
 
-def login_view(request):
-    return render(request,"app/login.html")
-
 def signup_view(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password
+        )
+        
+        login(request, user)
+        return redirect("home")
     return render(request,"app/signup.html")
 
+def login_view(request):
+    if request.method == "POST":
+      email = request.POST.get("email")
+      password = request.POST.get("password")
+      
+      user_obj = User.objects.filter(email=email).first()
+      
+      if user_obj is not None:
+          user = authenticate(
+             request,
+             username=user_obj.username,
+             password=password
+          )
+          
+      
+          if user is not None:
+            login(request, user)
+            return redirect("home")
+      
+    return render(request, "app/login.html")
+
+def logout_view(request):
+    logout(request)
+    return redirect("login")
+
+@login_required
 def recipe_detail(request,recipe_id):
-    recipe = Recipe.objects.get(id=recipe_id)
+    recipe = Recipe.objects.get(
+        id=recipe_id,
+        user=request.user
+    )
     ingredients = Ingredient.objects.filter(recipe=recipe)
     
     profile = UserProfile.objects.get(user=request.user)
@@ -58,9 +100,12 @@ def recipe_detail(request,recipe_id):
             "family_servings": family_servings,
     })
     
-    
+@login_required    
 def recipe_edit(request, recipe_id):
-    recipe = Recipe.objects.get(id=recipe_id)
+    recipe = Recipe.objects.get(
+        id=recipe_id,
+        user=request.user
+    )
     ingredients = Ingredient.objects.filter(recipe=recipe)
     
     if request.method == "POST":
@@ -134,11 +179,17 @@ def recipe_edit(request, recipe_id):
             "ingredients":ingredients,
             }   
     )
+    
+@login_required
 def recipe_delete(request, recipe_id):
-    recipe = Recipe.objects.get(id=recipe_id)
+    recipe = Recipe.objects.get(
+        id=recipe_id,
+        user=request.user
+    )
     recipe.delete()
     return redirect("home")
-    
+
+@login_required    
 def shoppinng_list(request):
     
     start_date = request.GET.get(
@@ -152,6 +203,7 @@ def shoppinng_list(request):
     )
     
     menus = Menu.objects.filter(
+        user=request.user,
         planned_date__range=[
             start_date,
             end_date
@@ -177,14 +229,14 @@ def shoppinng_list(request):
             
             for item in shopping_items.values():
                 ShoppingItem.objects.update_or_create(
-                    user_id=1,
+                    user=request.user,
                     name=item["name"],
                     unit=item["unit"],
                     defaults={
                         "total_quantity": item["quantity"],
                     }
                 )
-            saved_items = ShoppingItem.objects.filter(user_id=1)
+            saved_items = ShoppingItem.objects.filter(user=request.user)
     
     return render(
         request,
@@ -195,7 +247,8 @@ def shoppinng_list(request):
          "end_date": end_date,
         }
     )
-
+    
+@login_required
 def calendar_view(request):
     today = date.today()
     
@@ -220,6 +273,7 @@ def calendar_view(request):
     weeks = cal.monthdatescalendar(year,month)
     
     menus  = Menu.objects.filter(
+        user=request.user,
         planned_date__year=year,
         planned_date__month=month
     )
@@ -255,12 +309,15 @@ def calendar_view(request):
         }
     )
     
-    
+@login_required   
 def calendar_add(request):
-    recipes = Recipe.objects.all()
+    recipes = Recipe.objects.filter(
+        user=request.user
+    )
     planned_date = request.GET.get("date","2026-03-10")
     
     selected_menus = Menu.objects.filter(
+        user=request.user,
         planned_date=planned_date
     )
     
@@ -274,14 +331,18 @@ def calendar_add(request):
         planned_date = request.POST.get("planned_date")
         
         Menu.objects.filter(
+            user=request.user,
             planned_date=planned_date
         ).delete()
         
         for recipe_id in recipe_ids:
-            recipe = Recipe.objects.get(id=recipe_id)
+            recipe = Recipe.objects.get(
+                id=recipe_id,
+                user=request.user
+            )
             
             Menu.objects.create(
-                user_id=1,
+                user=request.user,
                 recipe=recipe,
                 planned_date=planned_date
             )
@@ -298,6 +359,7 @@ def calendar_add(request):
         }
     )
 
+@login_required
 def recipe_create(request):
     if request.method == "POST":
        title = request.POST.get("title")
@@ -311,6 +373,7 @@ def recipe_create(request):
        
        
        recipe = Recipe.objects.create(
+            user=request.user,
             title=title,
             servings=servings,
             memo=memo,
@@ -332,6 +395,8 @@ def recipe_create(request):
        return redirect("home")    
     return render(request,"app/recipe_create.html")
 
+
+@login_required
 def mypage(request):
     profile, created = UserProfile.objects.get_or_create(
         user=request.user
@@ -341,7 +406,7 @@ def mypage(request):
         "profile":profile
     })
 
-
+@login_required
 def mypage_edit(request):
     profile, created = UserProfile.objects.get_or_create(
         user=request.user
@@ -357,7 +422,8 @@ def mypage_edit(request):
     return render(request,"app/mypage_edit.html",{
         "profile": profile
     })
-    
+
+@login_required    
 def toggle_shopping_item(request, item_id):
     item = ShoppingItem.objects.get(id=item_id)
     

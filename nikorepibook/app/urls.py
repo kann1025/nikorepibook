@@ -33,6 +33,8 @@ urlpatterns = [
          name="toggle_shopping_item"
     ),
     
+    path("logout/", views.logout_view, name="logout"),
+    
     
     
 

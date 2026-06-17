@@ -10,9 +10,10 @@
       ＋
     </div>
 
-    <form action="/" method="get">
+    <form action="" method="post">
+      {% csrf_token %}
       <label>ニックネーム</label>
-      <input type="text" placeholder="かな">
+      <input type="text" name="username" placeholder="かな">
 
       <p>家族構成</p>
 
@@ -43,10 +44,10 @@
       人
 
       <label>メールアドレス</label>
-      <input type="email" placeholder="例）abcdefg@cook.com">
+      <input type="email" name="email" placeholder="例）abcdefg@cook.com">
 
       <label>パスワード</label>
-      <input type="password">
+      <input type="password" name="password">
 
       <label>パスワード（確認用）</label>
       <input type="password">
