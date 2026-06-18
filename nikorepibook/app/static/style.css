@@ -168,20 +168,19 @@ body {
   }
 
   .recipe-image {
-    height: 90px;
-    background: #f7f7f7;
-    border-radius: 8px;
-    font-size: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .recipe-image img{
     width: 100%;
     height: 220px;
-    object-fit: cover;
+    background: #f7f7f7;
     border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .recipe-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
 
@@ -562,7 +561,6 @@ button {
   border-radius: 6px;
 }
 
-/* マイページ編集 */
 
 .mypage-edit-section {
   padding: 24px;
@@ -592,4 +590,15 @@ button {
   text-decoration: none;
   border-radius: 6px;
   font-weight: bold;
+}
+
+
+/* レシピ詳細画面 */
+
+.detail-recipe-image {
+  width: 100%;
+  max-width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
 }
