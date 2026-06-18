@@ -9,8 +9,11 @@
     </header>
 
     <section>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
+
+            <label>レシピ画像</label>
+            <input type="file" name="image"> 
 
             <p>
                 タイトル<br>

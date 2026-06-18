@@ -8,10 +8,13 @@
     <h1>レシピ登録</h1>
   </header>
 
-  <form method="POST">
+  <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
   
   <section class="recipe-form">
+
+    <label>レシピ画像</label>
+    <input type="file" name="image">
 
     <label>タイトル</label>
     <input type="text"

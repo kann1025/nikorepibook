@@ -177,6 +177,14 @@ body {
     justify-content: center;
   }
 
+  .recipe-image img{
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+
   .recipe-card {
     font-size: 13px;
     text-decoration: none;

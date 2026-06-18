@@ -65,7 +65,9 @@ def recipe_detail(request,recipe_id):
     )
     ingredients = Ingredient.objects.filter(recipe=recipe)
     
-    profile = UserProfile.objects.get(user=request.user)
+    profile, created = UserProfile.objects.get_or_create(
+        user=request.user
+    )
     
     family_servings = (
         Decimal(profile.adult_count)
@@ -109,11 +111,15 @@ def recipe_edit(request, recipe_id):
     ingredients = Ingredient.objects.filter(recipe=recipe)
     
     if request.method == "POST":
+        image = request.FILES.get("image")
         recipe.title = request.POST.get("title")
         recipe.servings = request.POST.get("servings")
         recipe.memo = request.POST.get("memo")
         
         recipe.reference_url = request.POST.get("reference_url")
+        
+        if image:
+            recipe.image = image
         
         ingredient_ids = request.POST.getlist("ingredient_id")
         ingredient_names = request.POST.getlist("ingredient_name")
@@ -366,6 +372,7 @@ def recipe_create(request):
        servings = request.POST.get("servings")
        memo = request.POST.get("memo")
        reference_url = request.POST.get("reference_url")
+       image = request.FILES.get("image")
        ingredient_names = request.POST.getlist("ingredient_name")
        ingredient_amounts = request.POST.getlist("ingredient_amount")
        ingredient_units = request.POST.getlist("ingredient_unit")
@@ -378,6 +385,7 @@ def recipe_create(request):
             servings=servings,
             memo=memo,
             reference_url=reference_url,
+            image=image,
        )  
        
        for index,(name, amount,unit) in enumerate ( 

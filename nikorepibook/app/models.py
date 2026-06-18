@@ -8,6 +8,8 @@ class Recipe(models.Model):
     reference_url = models.URLField(blank=True)
     memo = models.TextField(blank=True)
     ingredients = models.TextField(blank=True)
+    image = models.ImageField(upload_to="recipe_images/", blank=True, null=True)
+    
 
     def __str__(self):
         return self.title
