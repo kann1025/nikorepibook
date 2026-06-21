@@ -46,7 +46,14 @@
              href="{% url 'recipe_detail' recipe.id %}"
              class="recipe-link"
           >
-            <div class="recipe-image">🍳</div>
+            <div class="recipe-image">
+                {% if recipe.image %}
+                   <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">  
+                {% else %}
+                    <span class="no-image">🍳</span>
+                {% endif %}
+            </div>
+            
             <p>{{ recipe.title }}</p>
           </a>
         </div>
