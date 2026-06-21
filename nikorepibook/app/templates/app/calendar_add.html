@@ -10,8 +10,6 @@
 
   <section>
 
-    <form method="POST">
-      {% csrf_token %}
 
       <input
       type="hidden"
@@ -22,16 +20,37 @@
 
       <h2>レシピを選択</h2>
 
+    <form method="GET" class="calendar-search-form">
+
+         <input
+           type="hidden"
+           name="date"
+           value="{{ planned_date }}"
+         > 
+
+         <input
+           type="text"
+           name="keyword"
+           value="{{ keyword }}"
+           placeholder="レシピ検索"
+           class="calendar-add-search"
+         >
+    </form>
+
+    <form method="POST">
+      {% csrf_token %}
+
       <input
-        type="text"
-        placeholder="レシピ検索"
+          type="hidden"
+          name="planned_date"
+          alue="{{ planned_date }}"
       >
 
       <div class="calendar-recipe-list">
 
         {% for recipe in recipes %}
 
-        <div class="calendar-recipe-item">
+         <div class="calendar-recipe-item">
 
           <input
              type="checkbox"
@@ -60,19 +79,19 @@
 
         {% empty %}
 
-        <p>レシピがありません</p>
+           <p>レシピがありません</p>
 
         {% endfor %}
 
      
       </div>
 
-      <button type="submit">
+      <button type="submit" class="calendar-add-button">
       追加
       </button>
 
     </form>
-    </section>
+  </section>
 
 </div>
 

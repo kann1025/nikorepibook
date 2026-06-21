@@ -37,11 +37,11 @@
                     class="day {% if not day.is_current_month %}muted{% endif %} {% if day.is_today %}today{% endif %} {% if day.menus %}has-menu{% endif %}"
                 >
 
-                  {{ day.day }}
+                  <span class="day-number">{{ day.day }}</span>
 
                   {% for menu in day.menus %}
                        <br>
-                       <span>{{ menu.recipe.title }}</span>
+                       <span class="menu-title">{{ menu.recipe.title }}</span>
                   {% endfor %}
                 </a>
              {% endfor %}

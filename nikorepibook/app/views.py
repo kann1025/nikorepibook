@@ -318,10 +318,17 @@ def calendar_view(request):
     
 @login_required   
 def calendar_add(request):
+    planned_date = request.GET.get("date","2026-03-10")
+    keyword = request.GET.get("keyword", "")
+    
+    
     recipes = Recipe.objects.filter(
         user=request.user
     )
-    planned_date = request.GET.get("date","2026-03-10")
+    if keyword:
+        recipes = recipes.filter(
+            title__icontains=keyword
+        )
     
     selected_menus = Menu.objects.filter(
         user=request.user,
@@ -363,6 +370,7 @@ def calendar_add(request):
             "recipes":recipes,
             "planned_date": planned_date,
             "selected_recipe_ids": selected_recipe_ids,
+            "keyword": keyword,
         }
     )
 

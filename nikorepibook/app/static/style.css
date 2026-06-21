@@ -453,19 +453,62 @@ button {
   align-items: center;
   padding: 10px 0 0;
 }
-
+/*
 .day span {
-  display: inline-block;
-  margin-top: 4px;
-  font-size: 10px;
+  display: block;
+  margin-top: 3px;
+  padding: 1px 2px;
+
+  font-size: 9%;
   color: #f6a623;
   line-height: 1.2;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+*/
+
+.day-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+  height: 24px;
+
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+
+  color: #333;
+}
+
+.menu-title {
+  display: block;
+  width: 100%;
+  margin-top: 2px;
+
+  font-size: 9px;
+  color: #f6a623;
+  line-height: 1.2;
+  text-align: center;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .today {
-  background: #fff3d6;
+  background: #fff;
   font-weight: bold;
 }
+
+.today .day-number {
+  background: #f6a623;
+  color: #fff;
+}
+
 
 .has-menu {
   background: #fff3d6;
@@ -495,7 +538,7 @@ button {
 .calendar-recipe-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .calendar-recipe-item {
@@ -506,7 +549,7 @@ button {
   width: 100%;
   box-sizing: border-box;
 
-  padding: 12px;
+  padding: 10px 12px;
   border: 1px solid #eee;
   border-radius: 10px;    
   background: #fff;
@@ -567,6 +610,38 @@ button {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.calendar-add-search {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 12px;
+  margin: 8px 0 12px;
+
+  border: 1px solid #ddd;
+  border-radius: 8px;
+
+  font-size: 14px;
+}
+
+.calendar-add-button {
+  width: 100%;
+  box-sizing: border-box;
+
+  margin-top: 12px;
+  margin-bottom: 90px;
+  padding: 14px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #f6a623;
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: bold;
+
 }
 
 /* レシピ登録画面 */
