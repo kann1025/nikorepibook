@@ -188,6 +188,7 @@ def recipe_edit(request, recipe_id):
     
 @login_required
 def recipe_delete(request, recipe_id):
+    
     recipe = Recipe.objects.get(
         id=recipe_id,
         user=request.user
@@ -196,7 +197,7 @@ def recipe_delete(request, recipe_id):
     return redirect("home")
 
 @login_required    
-def shoppinng_list(request):
+def shopping_list(request):
     
     start_date = request.GET.get(
         "start_date",
@@ -233,16 +234,16 @@ def shoppinng_list(request):
             else:
                 shopping_items[key]["quantity"] += ingredient.base_quantity
             
-            for item in shopping_items.values():
-                ShoppingItem.objects.update_or_create(
-                    user=request.user,
-                    name=item["name"],
-                    unit=item["unit"],
-                    defaults={
-                        "total_quantity": item["quantity"],
+    for item in shopping_items.values():
+        ShoppingItem.objects.update_or_create(
+            user=request.user,
+            name=item["name"],
+            unit=item["unit"],
+            defaults={
+                "total_quantity": item["quantity"],
                     }
-                )
-            saved_items = ShoppingItem.objects.filter(user=request.user)
+         )
+    saved_items = ShoppingItem.objects.filter(user=request.user)
     
     return render(
         request,

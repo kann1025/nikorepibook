@@ -10,10 +10,10 @@
   {% endblock %}
 
   <nav class="bottom-nav">
-    <a href="/">🏠<br>ホーム</a>
-    <a href="/shopping_list/">🛒<br>買い物リスト</a>
-    <a href="/calendar/">🗓️<br>献立表</a>
-    <a href="/mypage/">👤<br>マイページ</a>
+    <a href="{% url 'home' %}">🏠<br>ホーム</a>
+    <a href="{% url 'shopping_list' %}">🛒<br>買い物リスト</a>
+    <a href="{% url 'calendar' %}">🗓️<br>献立表</a>
+    <a href="{% url 'mypage' %}">👤<br>マイページ</a>
     <a href="/logout/">↪<br>ログアウト</a>
   </nav>
     

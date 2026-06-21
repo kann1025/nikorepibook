@@ -16,7 +16,7 @@ urlpatterns = [
          views.recipe_delete,
          name="recipe_delete"
     ),
-    path("shopping_list/",views.shoppinng_list,
+    path("shopping_list/",views.shopping_list,
          name="shopping_list"),
     path("calendar/",views.calendar_view,
          name="calendar"),
