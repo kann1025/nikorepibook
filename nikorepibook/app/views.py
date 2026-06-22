@@ -247,6 +247,13 @@ def shopping_list(request):
          )
     saved_items = ShoppingItem.objects.filter(user=request.user)
     
+    for item in saved_items:
+        if item.total_quantity == int(item.total_quantity):
+            item.display_quantity = int(item.total_quantity)
+        else:
+            item.display_quantity = item.total_quantity
+    
+    
     return render(
         request,
         "app/shopping_list.html",
