@@ -234,6 +234,8 @@ def shopping_list(request):
             else:
                 shopping_items[key]["quantity"] += ingredient.base_quantity
             
+    ShoppingItem.objects.filter(user=request.user).delete()
+    
     for item in shopping_items.values():
         ShoppingItem.objects.update_or_create(
             user=request.user,

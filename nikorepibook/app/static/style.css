@@ -328,8 +328,9 @@ button {
 }
 
 .section-label {
-  font-size: 13px;
-  margin-bottom: 8px;
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .date-range {
@@ -341,23 +342,35 @@ button {
 
 .date-range input {
   flex: 1;
-  padding: 8px;
-}
+  min-width: 0;
+  padding: 10px;
 
-.selected-recipes {
-  margin-bottom: 16px;
-}
-
-.small-recipe-image {
-  width: 48px;
-  height: 48px;
-  background: #f7f7f7;
   border: 1px solid #ddd;
+  border-radius: 6px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 13px;
+  box-sizing: border-box;
 }
+
+.date-range span {
+  font-weight: bold;
+}
+
+.shopping-button {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 16px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #f6a623;
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: bold;
+}
+
 
 .shopping-list {
   list-style: none;
@@ -366,27 +379,44 @@ button {
 }
 
 .shopping-list li {
-  display: grid;
-  grid-template-columns: 32px 1fr auto;
+  display: flex;
   align-items: center;
+  gap: 10px;
 
-  padding: 12px 0;
-  border-bottom: 1px solid #ddd;
+  padding: 12px 4px;
+  border-bottom: 1px solid #eee;
+
+  font-size: 14px;
 }
 
-.shopping-list input {
-  width: auto;
+.shopping-list input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
-.amount {
+.shopping-list li span:first-of-type {
+  flex: 1;
+}
+
+.shopping-list .amount {
+  margin-left: auto;
+  color: #555;
   font-size: 13px;
+}
+
+.empty-message {
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: #777;
+  padding: 24px 0;
+  border-bottom: none;
 }
 
 .checked-item {
   opacity: 0.5;
 }
-
-
 
 
 /* 献立表（カレンダー）画面 */
