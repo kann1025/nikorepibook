@@ -261,6 +261,7 @@ def shopping_list(request):
          "shopping_items": saved_items,
          "start_date": start_date,
          "end_date": end_date,
+         "menus": menus,
         }
     )
     

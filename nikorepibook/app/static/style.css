@@ -418,6 +418,42 @@ button {
   opacity: 0.5;
 }
 
+.checked-item span {
+  text-decoration: line-through;
+}
+
+.shopping-recipe-images {
+  display: flex;
+  gap: 8px;
+  margin: 4px 0 20px;
+  overflow-x: auto;
+}
+
+.shopping-recipe-image {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f7f7f7;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+}
+
+.shopping-recipe-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.shopping-recipe-image .no-image {
+  font-size: 24px;
+}
 
 /* 献立表（カレンダー）画面 */
 

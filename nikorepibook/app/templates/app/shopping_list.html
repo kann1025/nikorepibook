@@ -32,13 +32,25 @@
       </button>
     </form>
 
+    <div class="shopping-recipe-images">
+      {% for menu in menus %}
+        <a href="{% url 'recipe_detail' menu.recipe.id %}" class="shopping-recipe-image">
+          {% if menu.recipe.image %}
+            <img src="{{ menu.recipe.image.url }}" alt="{{ menu.recipe.title }}">
+          {% else %}
+            <span class="no-image">🍳</span>
+          {% endif %}
+        </a>
+      {% endfor %}
+    </div>
+
     
 
     <ul class="shopping-list">
 
       {% for item in shopping_items %}
 
-      <li>
+      <li class="{% if item.is_checked %}checked-item{% endif %}">
         <input
             type="checkbox"
             data-item-id="{{ item.id }}"
@@ -71,11 +83,18 @@
     checkbox.addEventListener('change', function(){
        
        const itemId = this.dataset.itemId;
+       const listItem = this.closest('li');
 
        fetch(`/shopping-item/${itemId}/toggle/`)
           .then(response => response.json())
           .then(data => {
             console.log(data);
+
+          if (this.checked) {
+            listItem.classList.add('checked-item');
+          }  else {
+             listItem.classList.remove('checked-item');
+          }
           });
     });
   });
