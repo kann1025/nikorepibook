@@ -725,8 +725,15 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 8px 0 24px;
+  margin: 12px 0 24px;
   font-weight: bold;
+}
+
+.serving-row select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
 }
 
 .ingredient-item {

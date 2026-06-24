@@ -41,12 +41,15 @@
     <div id="ingredient-list">
 
       <div class="ingredient-item">
-        <input type="text" name="ingredient_name"
-        placeholder="材料名">
+        <input
+         type="text"
+         name="ingredient_name"
+         placeholder="材料名">
 
-        <input type="text"
-        name="ingredient_amount"
-        placeholder="分量">
+        <input
+         type="text"
+         name="ingredient_amount"
+         placeholder="分量">
 
         <input
         type="text"
@@ -54,30 +57,46 @@
         placeholder="単位"
         >
 
-        <input
-        type="checkbox"
-        name="is_integer_only"
-        value="0">
+        <div class="ingredient-options">
+           <label>
+             <input
+               type="checkbox"
+               name="is_integer_only"
+               value="0">
+             小数点なし
+           </label>
+        </div>
+      
       </div>
 
       <div class="ingredient-item">
-        <input type="text" name="ingredient_name"
-        placeholder="材料名">
+        <input
+         type="text"
+         name="ingredient_name"
+         placeholder="材料名">
 
-        <input type="text"  name="ingredient_amount"
-        placeholder="分量">
+        <input
+         type="text"
+         name="ingredient_amount"
+         placeholder="分量">
 
         <input
         type="text"
         name="ingredient_unit"
         placeholder="単位"
         >
+
+        <div class="ingredient-options">
+          <label>
+            <input
+              type="checkbox"
+              name="is_integer_only"
+              value="1"
+            >
+            小数点なし
+          </label>
+        </div>
       
-        <input
-        type="checkbox"
-        name="is_integer_only"
-        value="1">
-      </div>
 
     </div>
 
@@ -120,23 +139,30 @@ document.getElementById("add-ingredient-button").addEventListener("click", funct
     
     newIngredient.innerHTML = `
         <input
-        type="text"
-        name="ingredient_name"
-        placeholder="材料名">
+         type="text"
+         name="ingredient_name"
+         placeholder="材料名">
 
         <input type="text"
-        name="ingredient_amount"
-        placeholder="分量">
+         name="ingredient_amount"
+         placeholder="分量">
 
         <input
-        type="text"
-        name="ingredient_unit"
-        placeholder="単位">
+         type="text"
+         name="ingredient_unit"
+         placeholder="単位">
 
-        <input
-        type="checkbox"
-        name="is_integer_only"
-        value="${ingredientIndex}">
+        <div class="ingredient-options">
+         <label>
+          <input
+           type="checkbox"
+           name="is_integer_only"
+           value="${ingredientIndex}"
+          >
+          小数点なし
+         </label>
+        </div>
+
     `;
 
     ingredientList.appendChild(newIngredient);
