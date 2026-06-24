@@ -8,9 +8,9 @@
     <h1>レシピ詳細</h1>
   </header>
 
-  <section>
+  <section class="recipe-detail-section">
 
-    <div class="recipe-image">
+    <div class="recipe-detail-image-box">
       {% if recipe.image %}
           <img
              src="{{ recipe.image.url }}"
@@ -18,41 +18,53 @@
              class="recipe-detail-image"
           >
       {% else %}
-      🍳
+       <span class="no-image">🍳</span>
       {% endif %}
     </div>
 
-    <h2>{{ recipe.title }}</h2>
+    <h2 class="recipe-detail-title">{{ recipe.title }}</h2>
 
-    <button class="add-button">
-      献立に追加
-    </button>
+    <div class="recipe-detail-buttons">
+     <button class="detail-main-button">
+       献立に追加
+     </button>
 
-    <a href="{% url 'recipe_edit' recipe.id %}" class="add-button">
-    レシピを編集
-    </a>
+     <a href="{% url 'recipe_edit' recipe.id %}" class="detail-sub-button">
+      レシピを編集
+     </a>
 
-    <a href="{% url 'recipe_delete' recipe.id %}" class="add-button">
-    レシピを削除
-    </a>
+     <a href="{% url 'recipe_delete' recipe.id %}" class="detail-delete-button">
+      レシピを削除
+     </a>
 
-    <h2>材料</h2>
-    {% for ingredient in ingredients %}
-       <p>
-          {{ ingredient.name }}
-          {{ ingredient.calculated_quantity }}{{ ingredient.unit }}
-           ({{ ingredient.amount }}{{ ingredient.unit }})
-        </p>
-    {% endfor %}
+    </div>
 
+    <h2 class="detail-section-title">材料</h2>
 
-    <h2>参考URL</h2>
+    <div class="ingredient-detail-list">
+      {% for ingredient in ingredients %}
+        <div class="ingredient-detail-item">
+          <span class="ingredient-detail-name">
+            {{ ingredient.name }}
+          </span>
+
+          <span class="ingredient-detail-amount">
+            {{ ingredient.calculated_quantity }}{{ ingredient.unit }}
+            <small>({{ ingredient.amount }}{{ ingredient.unit }})</small>
+          </span>
+
+        </div>
+
+      {% endfor %}
+    </div>
+
+    <h2 class="detail-section-title">参考URL</h2>
 
     <p class="recipe-url">
         {{ recipe.reference_url }}
     </p>
 
-    <h2>メモ</h2>
+    <h2 class="detail-section-title">メモ</h2>
 
     <div class="memo-box">
        {{ recipe.memo|linebreaksbr}} 

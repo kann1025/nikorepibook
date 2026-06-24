@@ -13,6 +13,13 @@
             {% csrf_token %}
 
             <label>レシピ画像</label>
+
+            {% if recipe.image %}
+              <div class="edit-current-image">
+                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+              </div>
+            {% endif%}
+
             <input type="file" name="image"> 
 
             <p>
@@ -36,20 +43,29 @@
                         <input type="text" name="ingredient_amount" value="{{ ingredient.amount }}" placeholder="分量">
                         <input type="text" name="ingredient_unit" value="{{ ingredient.unit }}" placeholder="単位">
 
-                        <input 
-                        type="checkbox"
-                        name="is_integer_only"
-                        value="{{ ingredient.id }}"
-                        {% if ingredient.is_integer_only %}checked{% endif %}>
                         
-                        <label>
+                        <div class="ingredient-options">
+                          <label>
                             <input
-                            type="checkbox"
-                            name="delete_ingredient_id"
-                            value="{{ ingredient.id }}">
+                              type="checkbox"
+                              name="is_integer_only"
+                              value="{{ ingredient.id }}"
+                              {% if ingredient.is_integer_only %}checked{% endif %}
+                            >
+                            小数点なし
+                          </label>
+                          
+                          <label>
+                            <input
+                              type="checkbox"
+                              name="delete_ingredient_id"
+                              value="{{ ingredient.id }}"
+                            >
                             削除
-                        </label>
+                          </label>
 
+                        </div>   
+                     
                     </div>
 
                 {% endfor %}
@@ -80,24 +96,31 @@
                         
                         newIngredient.innerHTML = `
                             <input
-                            type="text"
-                            name="new_ingredient_name"
-                            placeholder="材料名">
+                             type="text"
+                             name="new_ingredient_name"
+                             placeholder="材料名">
 
                             <input
-                            type="text"
-                            name="new_ingredient_amount"
-                            placeholder="分量">
+                             type="text"
+                             name="new_ingredient_amount"
+                             placeholder="分量">
 
                             <input
-                            type="text" 
-                            name="new_ingredient_unit"
-                            placeholder="単位">
+                             type="text" 
+                             name="new_ingredient_unit"
+                             placeholder="単位">
 
-                            <input
-                            type="checkbox"
-                            name="new_is_integer_only"
-                            value="${newIngredientIndex}">
+                            <div class="ingredient-options">
+                                <label>
+                                   <input
+                                       type="checkbox"
+                                       name="new_is_integer_only"
+                                       value="${newIngredientIndex}">
+                                   小数点なし
+                                </label>
+                            
+                            </div>
+
 
                         `;
 
