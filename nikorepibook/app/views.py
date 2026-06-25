@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Recipe,Ingredient,UserProfile,ShoppingItem,Menu
+from .models import Recipe,Ingredient,UserProfile,ShoppingItem,Menu,RecipeImage
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from decimal import Decimal
@@ -405,7 +405,16 @@ def recipe_create(request):
             memo=memo,
             reference_url=reference_url,
             image=image,
-       )  
+       )
+       
+       images = request.FILES.getlist("images")
+       
+       
+       for image_file in images:
+            RecipeImage.objects.create(
+                recipe=recipe,
+                image=image_file
+            ) 
        
        for index,(name, amount,unit) in enumerate ( 
             zip(ingredient_names, ingredient_amounts,ingredient_units)):

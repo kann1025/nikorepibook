@@ -13,6 +13,22 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.title
+    
+class RecipeImage(models.Model):
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name="images"
+    )
+    
+    image = models.ImageField(
+        upload_to="recipe_images/",
+        blank=True,
+        null=True
+    )
+    
+    def __str__(self):
+        return self.recipe.title
 
 
 class Ingredient(models.Model):

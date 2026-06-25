@@ -15,11 +15,23 @@
           <img
              src="{{ recipe.image.url }}"
              alt="{{ recipe.title }}"
-             class="recipe-detail-image"
+             class="recipe-detail-image open-image"
           >
       {% else %}
        <span class="no-image">🍳</span>
       {% endif %}
+    </div>
+
+    <div class="recipe-sub-images">
+      {% for recipe_image in recipe.images.all %}
+        <div class="recipe-sub-image">
+          <img
+            src="{{ recipe_image.image.url }}"
+            alt="{{ recipe.title }}"
+            class="open-image"
+          >
+        </div>
+      {% endfor %}
     </div>
 
     <h2 class="recipe-detail-title">{{ recipe.title }}</h2>
@@ -72,6 +84,30 @@
 
 
   </section>
+
+  <div id="image-modal" class="image-modal">
+    <img id="modal-image" src="" alt="拡大画像">
+  </div>
+
+
+  <script>
+    const imageModal = document.getElementById('image-modal');
+    const modalImage = document.getElementById('modal-image');
+    const openImages = document.querySelectorAll('.open-image');
+
+    openImages.forEach(function(image) {
+      image.addEventListener('click', function() {
+        modalImage.src = this.src;
+        imageModal.classList.add('show');
+      });
+    });
+
+    imageModal.addEventListener('click', function() {
+      imageModal.classList.remove('show');
+      odalImage.src = '';
+    });
+  </script>
+
 
 </div>
 
