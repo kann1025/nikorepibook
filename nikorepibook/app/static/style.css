@@ -1182,3 +1182,140 @@ button {
   display: block;
   margin-bottom: 4px;
 }
+
+
+.main-image-upload {
+  width: 100%;
+  height: 240px;
+  margin: 8px 0 20px;
+  border-radius: 10px;
+  background: #f3f3f3;
+  border: 1px solid #ddd;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  color: #4a8cff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.main-image-upload input[type="file"] {
+  display: none;
+}
+
+#main-image-preview {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.main-image-upload.has-image #main-image-text {
+  display: none;
+}
+
+#image-input-area {
+  display: flex;
+  gap: 10px;
+  margin: 8px 0 12px;
+  overflow-x: auto;
+}
+
+.sub-image-upload {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f3f3f3;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.sub-image-upload input[type="file"] {
+  display: none;
+}
+
+.sub-image-upload span {
+  color: #4a8cff;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.sub-image-upload img {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sub-image-upload.has-image span {
+  display: none;
+}
+
+.sub-image-upload.has-image img {
+  display: block;
+}
+
+#edit-main-image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#edit-main-image-preview[src=""] {
+  display: none;
+}
+
+.main-image-upload.has-image #edit-main-image-text {
+  display: none;
+}
+
+/* 編集画面のメイン画像エリア調整 */
+.recipe-form .main-image-upload,
+.recipe-detail-section .main-image-upload,
+form .main-image-upload {
+  width: 100% !important;
+  height: 240px !important;
+  margin: 8px 0 12px !important;
+  border-radius: 10px !important;
+  background: #f3f3f3 !important;
+  border: 1px solid #ddd !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  color: #4a8cff !important;
+  font-weight: bold !important;
+  cursor: pointer !important;
+}
+
+.main-image-upload input[type="file"] {
+  display: none !important;
+}
+
+.main-image-upload img,
+#edit-main-image-preview {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  object-fit: cover !important;
+  display: block;
+}
+
+#edit-main-image-preview[src=""] {
+  display: none !important;
+}
+
+#edit-image-input-area {
+  display: flex;
+  gap: 10px;
+  margin: 8px 0 12px;
+  overflow-x: auto;
+}

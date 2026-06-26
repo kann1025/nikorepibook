@@ -14,10 +14,27 @@
   <section class="recipe-form">
 
     <label>メイン画像</label>
-    <input type="file" name="image">
+
+    <label class="main-image-upload">
+      <input type="file" name="image" id="main-image-input">
+      <span id="main-image-text">画像を挿入</span>
+      <img id="main-image-preview" src="" alt="メイン画像プレビュー">
+    </label>
 
     <label>追加画像</label>
-    <input type="file" name="images" multiple>
+
+    <div id="image-input-area">
+      <label class="sub-image-upload">
+        <input type="file" name="images" class="sub-image-input">
+        <span>+</span>
+        <img src="" alt="追加画像プレビュー">
+      </label>
+
+    </div>
+
+    <button type="button" id="add-image-button" class="add-image-button">
+      画像を追加
+    </button>
 
     <label>タイトル</label>
     <input type="text"
@@ -173,4 +190,58 @@ document.getElementById("add-ingredient-button").addEventListener("click", funct
 });
 </script>
 
+<script>
+  const addImageButton = document.getElementById('add-image-button');
+  const imageInputArea = document.getElementById('image-input-area');
+
+  function setSubImagePreview(input) {
+    input.addEventListener('change', function() {
+      const file = this.files[0];
+      const uploadBox = this.closest('.sub-image-upload');
+      const previewImage = uploadBox.querySelector('img');
+
+      if (file) {
+        previewImage.src = URL.createObjectURL(file);
+        uploadBox.classList.add('has-image');
+      }
+    });
+  }
+
+  document.querySelectorAll('.sub-image-input').forEach(function(input) {
+    setSubImagePreview(input);
+  });
+
+  addImageButton.addEventListener('click', function() {
+    const newLabel = document.createElement('label');
+    newLabel.className = 'sub-image-upload';
+
+    newLabel.innerHTML = `
+      <input type="file" name="images" class="sub-image-input">
+      <span>＋</span>
+      <img src="" alt="追加画像プレビュー">
+    `;
+
+    imageInputArea.appendChild(newLabel);
+
+    const newInput = newLabel.querySelector('.sub-image-input');
+    setSubImagePreview(newInput);
+  });
+</script>
+
+
+<script>
+  const mainImageInput = document.getElementById('main-image-input');
+  const mainImagePreview = document.getElementById('main-image-preview');
+  const mainImageUpload = document.querySelector('.main-image-upload');
+
+  mainImageInput.addEventListener('change', function() {
+    const file = this.files[0];
+
+    if (file) {
+      mainImagePreview.src = URL.createObjectURL(file);
+      mainImagePreview.style.display = 'block';
+      mainImageUpload.classList.add('has-image');
+    }
+  });
+</script>
 {% endblock %}

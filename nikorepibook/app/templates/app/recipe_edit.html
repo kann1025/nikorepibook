@@ -14,40 +14,69 @@
 
             <label>メイン画像</label>
 
-            {% if recipe.image %}
-              <div class="edit-current-image">
-                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
-              </div>
+            <label class="main-image-upload">
+              <input type="file" name="image" id="edit-main-image-input">
 
-              <label class="image-delete-check">
-                <input type="checkbox" name="delete_main_image">
-                メイン画像を削除
-              </label>
-            {% endif%}
+              {% if recipe.image %}
+                <img
+                 id="edit-main-image-preview"
+                 src="{{ recipe.image.url }}"
+                 alt="{{ recipe.title }}"
+                >
+                <span id="edit-main-image-text" style="display: none;">
+                  画像を挿入
+                </span>
+              {% else %}
+                <img
+                 id="edit-main-image-preview"
+                 src=""
+                 alt="メイン画像プレビュー"
+                >
+                <span id="edit-main-image-text">画像を挿入</span>
+              {% endif %}
+            </label>
 
-            <input type="file" name="image"> 
+           {% if recipe.image %}
+             <label class="image-delete-check">
+               <input type="checkbox" name="delete_main_image">
+               メイン画像を削除
+             </label>
+           {% endif %} 
 
+           
             <label>追加画像</label>
-            <input type="file" name="images" multiple>
 
             {% if recipe.images.all %}
               <div class="edit-sub-images">
-                 {% for recipe_image in recipe.images.all %}
-                   <div class="edit-sub-image-item">
+                {% for recipe_image in recipe.images.all %}
+                  <div class="edit-sub-image-item">
                     <img src="{{ recipe_image.image.url }}" alt="{{ recipe.title }}">
 
                     <label class="image-delete-check">
                       <input
-                       type="checkbox"
-                       name="delete_sub_image_ids"
-                       value="{{ recipe_image.id }}"
+                        type="checkbox"
+                        name="delete_sub_image_ids"
+                        value="{{ recipe_image.id }}"
                       >
                       削除
-                    </label>  
-                   </div>
-                 {% endfor %}
+                    </label>
+                  </div>
+                {% endfor %}
               </div>
             {% endif %}
+
+            <div id="edit-image-input-area">
+              <label class="sub-image-upload">
+                <input type="file" name="images" class="edit-sub-image-input">
+                <span>+</span>
+                <img src="" alt="追加画像プレビュー">
+              </label>
+            </div>
+
+            <button type="button" id="edit-add-image-button" class="add-image-button">
+              画像を追加
+            </button>
+
 
             <p>
                 タイトル<br>
@@ -171,6 +200,62 @@
             <button type="submit" class="add-button">保存する</button>
         </form>
     </section>
+
+    <script>
+      const editMainImageInput = document.getElementById('edit-main-image-input');
+      const editMainImagePreview = document.getElementById('edit-main-image-preview');
+      const editMainImageUpload = document.querySelector('.main-image-upload');
+      const editMainImageText = document.getElementById('edit-main-image-text');
+
+      editMainImageInput.addEventListener('change',function(){
+        const file = this.files[0];
+
+        if (file) {
+          editMainImagePreview.src = URL.createObjectURL(file);
+          editMainImagePreview.style.display = 'block';
+          editMainImageUpload.classList.add('has-image');
+          editMainImageText.style.display = 'none';
+        }
+      });
+    </script>
+
+    <script>
+      const editAddImageButton = document.getElementById('edit-add-image-button');
+      const editImageInputArea = document.getElementById('edit-image-input-area');
+
+      function setEditSubImagePreview(input) {
+        input.addEventListener('change',function(){
+          const file = this.files[0];
+          const uploadBox = this.closest('.sub-image-upload');
+          const previewImage = uploadBox.querySelector('img');
+
+          if (file) {
+            previewImage.src = URL.createObjectURL(file);
+            uploadBox.classList.add('has-image')
+          }
+        });
+      }
+
+      document.querySelectorAll('.edit-sub-image-input').forEach(function(input){
+        setEditSubImagePreview(input);
+      });
+
+      editAddImageButton.addEventListener('click',function(){
+        const newLabel = document.createElement('label');
+        newLabel.className = 'sub-image-upload';
+
+        newLabel.innerHTML = `
+          <input type="file" name="images" class="edit-sub-image-input">
+          <span>+</span>
+          <img src="" alt="追加画像プレビュー">
+        `;
+
+        editImageInputArea.appendChild(newLabel);
+
+        const newInput = newLabel.querySelector('.edit-sub-image-input');
+        setEditSubImagePreview(newInput);
+      });
+    </script>
 
 </div>
 
