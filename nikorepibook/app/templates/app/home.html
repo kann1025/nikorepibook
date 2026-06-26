@@ -65,6 +65,11 @@
             <p class="recipe-title">{{ recipe.title }}</p>
          </a>
 
+      {% empty %}
+        <p class="empty-recipe-message">
+          該当するレシピがありません
+        </p>
+
       {% endfor %}
 
     </div>

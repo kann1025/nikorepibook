@@ -1437,3 +1437,11 @@ form .main-image-upload {
   margin: 0 !important;
   padding: 0 !important;
 }
+
+.empty-recipe-message {
+  width: 100%;
+  margin: 16px 0;
+  text-align: center;
+  color: #777;
+  font-size: 14px;
+}
