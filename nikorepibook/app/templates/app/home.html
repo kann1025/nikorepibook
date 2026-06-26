@@ -17,14 +17,20 @@
 
   <section class="ingredients">
     <h2>冷蔵庫にある食材</h2>
-    <div class="tags">
-      <span>卵</span>
-      <span>キャベツ</span>
-      <span>にんじん</span>
-      <span>玉ねぎ</span>
-      <span>なす</span>
-      <span>鶏肉</span>
+    <div class="ingredient-tags">
+      <a href="{% url 'home' %}?ingredient=卵">卵</a>
+      <a href="{% url 'home' %}?ingredient=キャベツ">キャベツ</a>
+      <a href="{% url 'home' %}?ingredient=にんじん">にんじん</a>
+      <a href="{% url 'home' %}?ingredient=玉ねぎ">玉ねぎ</a>
+      <a href="{% url 'home' %}?ingredient=なす">なす</a>
+      <a href="{% url 'home' %}?ingredient=鶏肉">鶏肉</a>
     </div>
+
+    {% if ingredient %}
+      <p class="search-result-text">
+       「{{ ingredient }}」を使うレシピ
+      </p>
+    {% endif %}
   </section>
 
   <section class="recipes">

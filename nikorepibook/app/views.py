@@ -11,10 +11,30 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def home(request):
+    keyword = request.GET.get("keyword", "")
+    ingredient = request.GET.get("ingredient", "")
+    
+    
     recipes = Recipe.objects.filter(
         user=request.user
     )
-    return render(request,"app/home.html",{'recipes':recipes})
+    
+    if keyword:
+        recipes = recipes.filter(title__icontains=keyword)
+        
+    if ingredient:
+        recipe_ids = Ingredient.objects.filter(
+            name__icontains=ingredient,
+            recipe__user=request.user
+        ).values_list("recipe_id", flat=True)
+        
+        recipes = recipes.filter(id__in=recipe_ids)
+        
+    return render(request,"app/home.html",{
+        "recipes":recipes,
+        "keyword": keyword,
+        "ingredient": ingredient,
+        })
 
 def signup_view(request):
     if request.method == "POST":
