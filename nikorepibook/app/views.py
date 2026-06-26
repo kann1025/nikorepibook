@@ -8,6 +8,8 @@ from datetime import date
 from django.http import JsonResponse
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+
 
 @login_required
 def home(request):
@@ -20,7 +22,15 @@ def home(request):
     )
     
     if keyword:
-        recipes = recipes.filter(title__icontains=keyword)
+        ingredient_recipe_ids = Ingredient.objects.filter(
+            name__icontains=keyword,
+            recipe__user=request.user
+        ).values_list("recipe_id", flat=True)
+        
+        recipes = recipes.filter(
+            Q(title__icontains=keyword) |
+            Q(id__in=ingredient_recipe_ids)
+        ).distinct()
         
     if ingredient:
         recipe_ids = Ingredient.objects.filter(
@@ -405,7 +415,6 @@ def calendar_add(request):
         recipe_ids = request.POST.getlist("recipe_ids")
         planned_date = request.POST.get("planned_date")
         
-        print("POSTの日付:", planned_date)
         
         if not planned_date:
             planned_date = date.today().strftime("%Y-%m-%d")

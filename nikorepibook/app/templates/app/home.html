@@ -8,10 +8,16 @@
     <p>レシピ一覧</p>
   </header>
 
-  <div class="search-box">
-    <input type="text" placeholder="食材・レシピ名で検索">
-    <button>🔍</button>
-  </div>
+  <form method="GET" action="{% url 'home' %}" class="search-box">
+    <input
+      type="text"
+      name="keyword"
+      value="{{ keyword }}"
+      placeholder="食材・レシピ名で検索"
+    >
+
+    <button type="submit">🔍</button>
+  </form>
 
   <a href="/recipe_create/" class="add-button">＋ レシピの追加</a>
 
@@ -31,6 +37,13 @@
        「{{ ingredient }}」を使うレシピ
       </p>
     {% endif %}
+
+    {% if keyword %}
+      <p class="search-result-text">
+        「{{ keyword }}」で検索中
+      </p>
+    {% endif %}
+
   </section>
 
   <section class="recipes">

@@ -1372,3 +1372,68 @@ form .main-image-upload {
   font-weight: bold;
   color: #d46a00;
 }
+
+.search-box {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 16px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  padding: 14px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.search-box button {
+  width: 48px;
+  height: 48px;
+  border: none;
+  background: #eee;
+  cursor: pointer;
+}
+
+/* ホーム画面の検索欄 */
+.search-box {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  margin: 16px 0 !important;
+  box-sizing: border-box !important;
+}
+
+.search-box input {
+  width: 100% !important;
+  height: 48px !important;
+  padding: 0 56px 0 14px !important;
+  border: 1px solid #ddd !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  outline: none !important;
+  box-sizing: border-box !important;
+  background: #fff !important;
+}
+
+.search-box button {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 48px !important;
+  height: 48px !important;
+  border: none !important;
+  border-left: 1px solid #ddd !important;
+  border-radius: 0 8px 8px 0 !important;
+  background: #eee !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
