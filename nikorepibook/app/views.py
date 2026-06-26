@@ -354,8 +354,13 @@ def calendar_view(request):
     
 @login_required   
 def calendar_add(request):
-    planned_date = request.GET.get("date","2026-03-10")
+    planned_date = request.GET.get("date")
+    
+    if not planned_date:
+        planned_date = date.today().strftime("%Y-%m-%d")
+
     keyword = request.GET.get("keyword", "")
+    selected_recipe_id = request.GET.get("recipe_id")
     
     
     recipes = Recipe.objects.filter(
@@ -379,6 +384,11 @@ def calendar_add(request):
     if request.method == "POST":
         recipe_ids = request.POST.getlist("recipe_ids")
         planned_date = request.POST.get("planned_date")
+        
+        print("POSTの日付:", planned_date)
+        
+        if not planned_date:
+            planned_date = date.today().strftime("%Y-%m-%d")
         
         Menu.objects.filter(
             user=request.user,
@@ -407,6 +417,7 @@ def calendar_add(request):
             "planned_date": planned_date,
             "selected_recipe_ids": selected_recipe_ids,
             "keyword": keyword,
+            "selected_recipe_id": selected_recipe_id,
         }
     )
 

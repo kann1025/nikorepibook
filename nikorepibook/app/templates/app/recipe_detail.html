@@ -37,9 +37,12 @@
     <h2 class="recipe-detail-title">{{ recipe.title }}</h2>
 
     <div class="recipe-detail-buttons">
-     <button class="detail-main-button">
+      <a
+        href="{% url 'calendar_add' %}?recipe_id={{ recipe.id }}"
+        class="detail-main-button"
+      >
        献立に追加
-     </button>
+      </a>
 
      <a href="{% url 'recipe_edit' recipe.id %}" class="detail-sub-button">
       レシピを編集

@@ -11,12 +11,6 @@
   <section>
 
 
-      <input
-      type="hidden"
-      name="planned_date"
-      value="{{ planned_date }}"
-      >
-
 
       <h2>レシピを選択</h2>
 
@@ -40,11 +34,16 @@
     <form method="POST">
       {% csrf_token %}
 
-      <input
-          type="hidden"
+      <div class="calendar-date-box">
+        <label>追加する日付</label>
+        <input
+          type="date"
           name="planned_date"
-          alue="{{ planned_date }}"
-      >
+          value="{{ planned_date }}"
+          class="calendar-date-input"
+        >
+      </div>
+
 
       <div class="calendar-recipe-list">
 
@@ -56,7 +55,7 @@
              type="checkbox"
              name="recipe_ids"
              value="{{ recipe.id }}"
-             {% if recipe.id in selected_recipe_ids %}
+             {% if recipe.id in selected_recipe_ids or selected_recipe_id == recipe.id|stringformat:"s" %}
                   checked
              {% endif %}
           >

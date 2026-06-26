@@ -1319,3 +1319,25 @@ form .main-image-upload {
   margin: 8px 0 12px;
   overflow-x: auto;
 }
+
+
+.calendar-date-box {
+  margin: 12px 0 16px;
+}
+
+.calendar-date-box label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.calendar-date-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #fff;
+}
