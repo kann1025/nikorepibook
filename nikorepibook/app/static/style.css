@@ -946,6 +946,42 @@ button {
   margin: 0 !important;
 }
 
+.image-delete-check {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  width: auto !important;
+  margin: 6px 0 12px !important;
+  font-size: 13px;
+  color: #555;
+}
+
+.edit-sub-images {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0 18px;
+  overflow-x: auto;
+}
+
+.edit-sub-image-item {
+  width: 88px;
+  flex-shrink: 0;
+}
+
+.edit-sub-image-item img {
+  width: 88px;
+  height: 88px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.edit-sub-image-item .image-delete-check {
+  font-size: 12px;
+  margin: 4px 0 0 !important;
+}
+
 /* レシピ詳細画面 */
 
 .recipe-detail-section {
@@ -1122,4 +1158,27 @@ button {
 
 .open-image {
   cursor: pointer;
+}
+
+
+.edit-sub-images {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0 18px;
+  overflow-x: auto;
+}
+
+.edit-sub-image-item {
+  width: 88px;
+  flex-shrink: 0;
+}
+
+.edit-sub-image-item img {
+  width: 88px !important;
+  height: 88px !important;
+  max-width: 88px !important;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  margin-bottom: 4px;
 }

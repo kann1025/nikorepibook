@@ -18,9 +18,36 @@
               <div class="edit-current-image">
                 <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
               </div>
+
+              <label class="image-delete-check">
+                <input type="checkbox" name="delete_main_image">
+                メイン画像を削除
+              </label>
             {% endif%}
 
             <input type="file" name="image"> 
+
+            <label>追加画像</label>
+            <input type="file" name="images" multiple>
+
+            {% if recipe.images.all %}
+              <div class="edit-sub-images">
+                 {% for recipe_image in recipe.images.all %}
+                   <div class="edit-sub-image-item">
+                    <img src="{{ recipe_image.image.url }}" alt="{{ recipe.title }}">
+
+                    <label class="image-delete-check">
+                      <input
+                       type="checkbox"
+                       name="delete_sub_image_ids"
+                       value="{{ recipe_image.id }}"
+                      >
+                      削除
+                    </label>  
+                   </div>
+                 {% endfor %}
+              </div>
+            {% endif %}
 
             <p>
                 タイトル<br>

@@ -118,9 +118,7 @@ def recipe_edit(request, recipe_id):
         
         recipe.reference_url = request.POST.get("reference_url")
         
-        if image:
-            recipe.image = image
-        
+       
         ingredient_ids = request.POST.getlist("ingredient_id")
         ingredient_names = request.POST.getlist("ingredient_name")
         ingredient_amounts = request.POST.getlist("ingredient_amount")
@@ -173,7 +171,35 @@ def recipe_edit(request, recipe_id):
                 )
             
 
+        
+        if image:
+              recipe.image = image
+              
+        if request.POST.get("delete_main_image"):
+            recipe.image.delete(save=False)
+            recipe.image = None
+        
         recipe.save()
+        
+        delete_sub_image_ids = request.POST.getlist("delete_sub_image_ids")
+        
+        delete_images = RecipeImage.objects.filter(
+            id__in=delete_sub_image_ids,
+            recipe=recipe
+        )
+        
+        for delete_image in delete_images:
+            delete_image.image.delete(save=False)
+            delete_image.delete()
+            
+        
+        images = request.FILES.getlist("images")
+        
+        for image_file in images:
+            RecipeImage.objects.create(
+                recipe=recipe,
+                image=image_file
+            )
 
         return redirect("recipe_detail", recipe_id=recipe.id)
     
