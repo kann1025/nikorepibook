@@ -40,10 +40,20 @@ def home(request):
         
         recipes = recipes.filter(id__in=recipe_ids)
         
+    ingredient_tags = Ingredient.objects.filter(
+        recipe__user=request.user
+    ).exclude(
+        name=""
+    ).values_list(
+        "name",
+        flat=True
+    ).distinct()
+        
     return render(request,"app/home.html",{
         "recipes":recipes,
         "keyword": keyword,
         "ingredient": ingredient,
+        "ingredient_tags": ingredient_tags,
         })
 
 def signup_view(request):

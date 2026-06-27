@@ -1445,3 +1445,15 @@ form .main-image-upload {
   color: #777;
   font-size: 14px;
 }
+
+.ingredient-tags a.active-tag {
+  background: #fff3d6;
+  border-color: #f6a623;
+  color: #d46a00;
+}
+
+.empty-ingredient-message {
+  margin: 8px 0;
+  color: #777;
+  font-size: 13px;
+}

@@ -24,12 +24,18 @@
   <section class="ingredients">
     <h2>冷蔵庫にある食材</h2>
     <div class="ingredient-tags">
-      <a href="{% url 'home' %}?ingredient=卵">卵</a>
-      <a href="{% url 'home' %}?ingredient=キャベツ">キャベツ</a>
-      <a href="{% url 'home' %}?ingredient=にんじん">にんじん</a>
-      <a href="{% url 'home' %}?ingredient=玉ねぎ">玉ねぎ</a>
-      <a href="{% url 'home' %}?ingredient=なす">なす</a>
-      <a href="{% url 'home' %}?ingredient=鶏肉">鶏肉</a>
+      {% for tag in ingredient_tags %}
+       <a
+         href="{% url 'home' %}?ingredient={{ tag }}"
+         class="{% if ingredient == tag %}active-tag{% endif %}"
+       >
+         {{ tag }}
+       </a>
+      {% empty %}
+       <p class="empty-ingredient-message">
+        まだ材料が登録されていません
+       </p>
+      {% endfor %}
     </div>
 
     {% if ingredient %}
