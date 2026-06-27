@@ -178,6 +178,10 @@ def recipe_edit(request, recipe_id):
             ingredient_amounts,
             ingredient_units,
         ):
+            
+            name = name.strip()
+            unit = unit.strip()
+            
             ingredient = Ingredient.objects.get(id=ingredient_id)
             
             if ingredient_id in delete_ingredient_ids:
@@ -197,6 +201,9 @@ def recipe_edit(request, recipe_id):
             new_ingredient_amounts,
             new_ingredient_units 
         )):
+            name = name.strip()
+            unit = unit.strip()
+            
             if name != "" or amount != "":
                 Ingredient.objects.create(
                     recipe=recipe,
@@ -493,7 +500,16 @@ def recipe_create(request):
             ) 
        
        for index,(name, amount,unit) in enumerate ( 
-            zip(ingredient_names, ingredient_amounts,ingredient_units)):
+            zip(
+                ingredient_names,
+                ingredient_amounts,
+                ingredient_units
+            )
+        ):
+            
+            name = name.strip()
+            unit = unit.strip()
+            
             if name and amount:
                  Ingredient.objects.create(
                     recipe=recipe,
