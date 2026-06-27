@@ -10,12 +10,37 @@
 
   <section class="mypage-edit-section">
 
-    <div class="profile-circle">
-      👤
-    </div>
+    
 
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
+
+        <label>プロフィール画像</label>
+
+        <label class="profile-image-upload">
+          <input type="file" name="image" id="profile-image-input">
+
+          {% if profile.image %}
+            <img
+              id="profile-image-preview"
+              src="{{ profile.image.url }}"
+              alt="プロフィール画像"
+            >
+            <span id="profile-image-text" style="display: none;">画像を選択</span>
+          {% else %}
+           <img
+             id="profile-image-preview"
+             src=""
+             alt="プロフィール画像プレビュー"
+           >
+           <span id="profile-image-text">画像を選択</span>
+          
+          {% endif %}
+        </label>
+
+
+
+
         <label>ニックネーム</label>
         <input
         type="text"
@@ -49,5 +74,20 @@
   </section>
 
 </div>
+<script>
+  const profileImageInput = document.getElementById('profile-image-input');
+  const profileImagePreview = document.getElementById('profile-image-preview');
+  const profileImageText = document.getElementById('profile-image-text');
+
+  profileImageInput.addEventListener('change', function() {
+    const file = this.files[0];
+
+    if (file) {
+      profileImagePreview.src = URL.createObjectURL(file);
+      profileImagePreview.style.display = 'block';
+      profileImageText.style.display = 'none';
+    }
+  });
+</script>
 
 {% endblock %}

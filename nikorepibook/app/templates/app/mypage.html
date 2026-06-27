@@ -10,7 +10,11 @@
   <section class="mypage-section">
 
     <div class="profile-circle">
-      👤
+      {% if profile.image %}
+        <img src="{{ profile.image.url }}" alt="プロフィール画像">
+      {% else %}
+        👤
+      {% endif %}
     </div>
 
     <div class="profile-info">

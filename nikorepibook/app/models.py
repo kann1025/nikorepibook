@@ -54,6 +54,11 @@ class UserProfile(models.Model):
         User,
         on_delete=models.CASCADE
     )
+    image = models.ImageField(
+        upload_to="profile_images/",
+        blank=True,
+        null=True
+    )
     adult_count = models.IntegerField(default=1)
     child_count = models.IntegerField(default=0)
     

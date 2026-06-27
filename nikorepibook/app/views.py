@@ -541,8 +541,13 @@ def mypage_edit(request):
     )
     
     if request.method == "POST":
+        image = request.FILES.get("image")
         profile.adult_count = request.POST.get("adult_count")
         profile.child_count = request.POST.get("child_count")
+        
+        if image:
+            profile.image = image
+            
         profile.save()
         
         return redirect("mypage")
