@@ -60,9 +60,11 @@
              {% endif %}
           >
 
-          <a 
-             href="{% url 'recipe_detail' recipe.id %}"
-             class="recipe-link"
+          <div
+            class="recipe-link open-recipe-modal"
+            data-title="{{ recipe.title }}"
+            data-memo="{{ recipe.memo|default:''|escape }}"
+            data-image="{% if recipe.image %}{{ recipe.image.url }}{% endif %}"
           >
             <div class="recipe-image">
                 {% if recipe.image %}
@@ -73,7 +75,18 @@
             </div>
             
             <p>{{ recipe.title }}</p>
-          </a>
+
+            <div class="modal-ingredients-source">
+              {% for ingredient in recipe.ingredient_set.all %}
+                <li>
+                  {{ ingredient.name }}
+                  {{ ingredient.amount }}{{ ingredient.unit }}
+                </li>
+              {% empty %}
+                <li>材料はありません</li>
+              {% endfor %}
+            </div>
+          </div>
         </div>
 
         {% empty %}
@@ -93,5 +106,79 @@
   </section>
 
 </div>
+
+<div id="recipe-modal" class="recipe-modal">
+  <div class="recipe-modal-content">
+
+    <button type="button" id="close-recipe-modal" class="recipe-modal-close">
+      x
+    </button>
+
+    <div class="recipe-modal-image-box">
+      <img id="recipe-modal-image" src="" alt="レシピ画像">
+      <span id="recipe-modal-no-image">🍳</span>
+    </div>
+
+    <h2 id="recipe-modal-title"></h2>
+
+    <h3>材料</h3>
+    <ul id="recipe-modal-ingredients"></ul>
+
+    <h3>メモ</h3>
+    <p id="recipe-modal-memo"></p>
+
+  </div>
+</div>
+
+<script>
+  const recipeModal = document.getElementById('recipe-modal');
+  const closeRecipeModal = document.getElementById('close-recipe-modal');
+  const recipeModalTitle = document.getElementById('recipe-modal-title');
+  const recipeModalMemo = document.getElementById('recipe-modal-memo');
+  const recipeModalImage = document.getElementById('recipe-modal-image');
+  const recipeModalNoImage = document.getElementById('recipe-modal-no-image');
+  const recipeModalIngredients = document.getElementById('recipe-modal-ingredients');
+
+  document.querySelectorAll('.open-recipe-modal').forEach(function(recipeItem){
+    recipeItem.addEventListener('click',function(){
+       const title = this.dataset.title;
+       const memo = this.dataset.memo;
+       const image = this.dataset.image;
+       const ingredientsSource = recipeItem.querySelector('.modal-ingredients-source');
+
+       recipeModalTitle.textContent = title;
+       recipeModalMemo.textContent = memo || 'メモはありません';
+
+       if (ingredientsSource){
+        recipeModalIngredients.innerHTML = ingredientsSource.innerHTML;
+       }else{
+        recipeModalIngredients.innerHTML = '<li>材料はありません</li>';
+       }
+
+       if(image){
+        recipeModalImage.src = image;
+        recipeModalImage.style.display = 'block';
+        recipeModalNoImage.style.display = 'none';
+       }else{
+        recipeModalImage.src = '';
+        recipeModalImage.style.display = 'none';
+        recipeModalNoImage.style.display = 'block';
+       }
+
+       recipeModal.classList.add('show');
+    });
+  });
+
+  closeRecipeModal.addEventListener('click',function(){
+    recipeModal.classList.remove('show');
+  });
+
+  recipeModal.addEventListener('click',function(event){
+    if (event.target === recipeModal) {
+      recipeModal.classList.remove('show');
+    }
+  });
+
+</script>
 
 {% endblock %}
