@@ -272,15 +272,21 @@ def recipe_delete(request, recipe_id):
 @login_required    
 def shopping_list(request):
     
-    start_date = request.GET.get(
-        "start_date",
-        date.today().strftime("%Y-%m-%d")
-    )
+    start_date = request.GET.get("start_date")
+    end_date = request.GET.get("end_date")
     
-    end_date = request.GET.get(
-        "end_date",
-        date.today().strftime("%Y-%m-%d")
-    )
+    if start_date and end_date:
+        request.session["shopping_start_date"] = start_date
+        request.session["shopping_end_date"] = end_date
+    else:
+        start_date = request.session.get(
+            "shopping_start_date",
+            date.today().strftime("%Y-%m-%d")
+        )
+        end_date = request.session.get(
+            "shopping_end_date",
+            date.today().strftime("%Y-%m-%d")
+        )
     
     menus = Menu.objects.filter(
         user=request.user,
