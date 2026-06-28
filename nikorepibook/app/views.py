@@ -296,6 +296,12 @@ def shopping_list(request):
         ]
     )
     
+    profile, created = UserProfile.objects.get_or_create(
+        user=request.user
+    )
+    
+    user_servings = profile.adult_count + profile.child_count * Decimal(0.5)
+    
     shopping_items = {}
     
     for menu in menus:
@@ -304,14 +310,23 @@ def shopping_list(request):
         for ingredient in ingredients:
             key = ingredient.name + ingredient.unit
             
+            converted_quantity = (
+                ingredient.base_quantity
+                * user_servings
+                / Decimal(menu.recipe.servings)
+            )
+            
+            if ingredient.is_integer_only:
+                converted_quantity = int(converted_quantity)
+            
             if key not in shopping_items:
                 shopping_items[key] = {
                     "name": ingredient.name,
-                    "quantity": ingredient.base_quantity,
+                    "quantity": converted_quantity,
                     "unit": ingredient.unit,
                 }
             else:
-                shopping_items[key]["quantity"] += ingredient.base_quantity
+                shopping_items[key]["quantity"] += converted_quantity
             
     ShoppingItem.objects.filter(user=request.user).delete()
     
