@@ -328,16 +328,28 @@ def shopping_list(request):
             else:
                 shopping_items[key]["quantity"] += converted_quantity
             
+    checked_item_keys = []
+    
+    checked_items = ShoppingItem.objects.filter(
+        user=request.user,
+        is_checked=True
+    )
+    
+    for checked_item in checked_items:
+        key = checked_item.name + checked_item.unit
+        checked_item_keys.append(key)
+    
     ShoppingItem.objects.filter(user=request.user).delete()
     
     for item in shopping_items.values():
-        ShoppingItem.objects.update_or_create(
+        key = item["name"] + item["unit"]
+        
+        ShoppingItem.objects.create(
             user=request.user,
             name=item["name"],
             unit=item["unit"],
-            defaults={
-                "total_quantity": item["quantity"],
-                    }
+            total_quantity=item["quantity"],
+            is_checked=key in checked_item_keys,
          )
     saved_items = ShoppingItem.objects.filter(user=request.user)
     
