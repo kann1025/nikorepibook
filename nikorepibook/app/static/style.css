@@ -1588,3 +1588,82 @@ form .main-image-upload {
 #recipe-modal-ingredients li {
   margin-bottom: 4px;
 }
+
+.error-message {
+  color: #d46a00;
+  font-size: 14px;
+  font-weight: bold;
+  margin: 8px 0 16px;
+  text-align: center;
+}
+
+.profile-image {
+  width: 90px;
+  height: 90px;
+  margin: 16px auto 24px;
+  border-radius: 50%;
+  background: #ddd;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+}
+
+.profile-image input[type="file"] {
+  display: none;
+}
+
+#signup-profile-image-preview {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-image.has-image #signup-profile-image-text {
+  display: none;
+}
+
+.profile-image.has-image #signup-profile-image-preview {
+  display: block;
+}
+
+/* 新規登録画面のプロフィール画像 */
+.profile-image {
+  width: 90px;
+  height: 90px;
+  margin: 16px auto 24px;
+  border-radius: 50%;
+  background: #ddd;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+}
+
+.profile-image input[type="file"] {
+  display: none !important;
+}
+
+#signup-profile-image-preview {
+  display: none !important;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-image.has-image #signup-profile-image-text {
+  display: none;
+}
+
+.profile-image.has-image #signup-profile-image-preview {
+  display: block !important;
+}

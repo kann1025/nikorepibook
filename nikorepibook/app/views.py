@@ -58,9 +58,61 @@ def home(request):
 
 def signup_view(request):
     if request.method == "POST":
-        username = request.POST.get("username")
-        email = request.POST.get("email")
-        password = request.POST.get("password")
+        username = request.POST.get("username","").strip()
+        email = request.POST.get("email","").strip()
+        password = request.POST.get("password","")
+        password_confirm = request.POST.get("password_confirm", "")
+        adult_count = request.POST.get("adult_count", 1)
+        child_count = request.POST.get("child_count", 0)
+        image = request.FILES.get("image")
+        
+        if not username:
+            return render(
+                request,
+                "app/signup.html",{
+                    "error": "ニックネームを入力してください。"
+                }
+            )
+            
+        if not email:
+            return render(
+                request,
+                "app/signup.html",{
+                    "error": "メールアドレスを入力してください。"
+                }
+            )
+            
+        if not password:
+            return render(
+                request,
+                "app/signup.html",{
+                    "error": "パスワードを入力してください。"
+                } 
+            )
+             
+        if password != password_confirm:
+            return render(
+                request, 
+                "app/signup.html",{
+                    "error": "パスワードが一致しません。"
+                }
+            )
+             
+        if User.objects.filter(username=username).exists():
+           return render(
+               request,
+               "app/signup.html",{
+                   "error": "このニックネームはすでに使われています。"
+               }
+           ) 
+             
+        if User.objects.filter(email=email).exists():
+            return render(
+                request,
+                "app/signup.html",{
+                    "error": "このメールアドレスはすでに登録されています。"
+                }
+            )
         
         user = User.objects.create_user(
             username=username,
@@ -68,8 +120,19 @@ def signup_view(request):
             password=password
         )
         
+        profile, created = UserProfile.objects.get_or_create(user=user)
+        profile.adult_count = adult_count
+        profile.child_count = child_count
+
+        
+        if image:
+            profile.image = image
+            
+        profile.save()
+
         login(request, user)
         return redirect("home")
+    
     return render(request,"app/signup.html")
 
 def login_view(request):

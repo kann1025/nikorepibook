@@ -6,19 +6,37 @@
   <div class="app-container">
     <h2>新規登録画面</h2>
 
-    <div class="profile-image">
-      ＋
-    </div>
-
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data" autocomplete="off">
       {% csrf_token %}
+
+      <label class="profile-image">
+        <input type="file" name="image" id="signup-profile-image-input">
+        <span id="signup-profile-image-text">＋</span>
+        <img
+          id="signup-profile-image-preview"
+          src=""
+           alt=""
+        >
+      </label>
+
+
+      {% if error %}
+        <p class="error-message">{{ error }}</p>
+      {% endif %}
+
       <label>ニックネーム</label>
-      <input type="text" name="username" placeholder="かな">
+      <input 
+        type="text"
+        name="username"
+        placeholder="かな"
+        required
+        autocomplete="off"
+      >
 
       <p>家族構成</p>
 
       <label>大人</label>
-      <select>
+      <select name="adult_count">
         <option>1</option>
         <option selected>2</option>
         <option>3</option>
@@ -32,7 +50,7 @@
       <br>
 
       <label>こども</label>
-      <select>
+      <select name="child_count">
         <option>0</option>
         <option>1</option>
         <option selected>2</option>
@@ -44,16 +62,48 @@
       人
 
       <label>メールアドレス</label>
-      <input type="email" name="email" placeholder="例）abcdefg@cook.com">
+      <input
+        type="email"
+        name="email"
+        placeholder="例）abcdefg@cook.com"
+        required
+        autocomplete="off"
+      >
 
       <label>パスワード</label>
-      <input type="password" name="password">
+      <input
+        type="password"
+        name="password"
+        required
+        autocomplete="new-password"
+      >
 
       <label>パスワード（確認用）</label>
-      <input type="password">
+      <input
+        type="password"
+        name="password_confirm"
+        required
+        autocomplete="new-password"
+      >
 
       <button type="submit">アカウントを登録する</button>
     </form>
   </div>
+
+  <script>
+    const signupProfileImageInput = document.getElementById('signup-profile-image-input');
+    const signupProfileImagePreview = document.getElementById('signup-profile-image-preview');
+    const signupProfileImageUpload = document.querySelector('.profile-image');
+
+    signupProfileImageInput.addEventListener('change',function(){
+      const file = this.files[0];
+
+      if (file) {
+        signupProfileImagePreview.src = URL.createObjectURL(file);
+        signupProfileImageUpload.classList.add('has-image');
+      }
+    });
+
+  </script>
 
   {% endblock %}
