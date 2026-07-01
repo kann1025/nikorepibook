@@ -662,3 +662,7 @@ def toggle_shopping_item(request, item_id):
         "success": True,
         "is_checked": item.is_checked
     })
+    
+    
+def portfolio_view(request):
+    return render(request, "app/portfolio.html")

@@ -1,0 +1,32 @@
+{% extends "app/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="portfolio-page">
+
+  <h1>作品No.1 にこれぴbook</h1>
+
+  <div class="portfolio-image">
+     <img src="{% static 'portfolio_screenshot.png' %}" alt="にこれぴbookのスクリーンショット">
+  </div>
+
+  <p class="portfolio-description">
+    家族人数に合わせてレシピ分量を自動換算し、献立から買い物リストまで作成できるレシピ管理アプリです。
+    レシピ・献立・買い物リストはユーザーごとに管理できます。
+  </p>
+
+  <div class="portfolio-links">
+    <a href="#" target="_blank">企画書</a>
+    <a href="#" target="_blank">画面設計図</a>
+    <a href="#" target="_blank">画面遷移図</a>
+    <a href="#" target="_blank">ER図</a>
+  </div>
+
+  <a href="{% url 'login' %}" class="portfolio-app-button">
+    このアプリにアクセス
+  </a>
+
+</div>
+
+{% endblock %}

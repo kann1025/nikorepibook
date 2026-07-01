@@ -9,7 +9,7 @@
   {% block content %}
   {% endblock %}
 
-  {% if user.is_authenticated %}
+  {% if user.is_authenticated and request.resolver_match.url_name != "portfolio" %}
   <nav class="bottom-nav">
     <a href="{% url 'home' %}">🏠<br>ホーム</a>
     <a href="{% url 'shopping_list' %}">🛒<br>買い物リスト</a>
