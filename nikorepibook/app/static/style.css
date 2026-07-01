@@ -1735,7 +1735,8 @@ form .main-image-upload {
 }
 
 .portfolio-image {
-    width: 85%;
+    width: 50%;
+    max-width: 320px;
     margin: 0 auto 28px;
     background: #f3f3f3;
     border: 2px dashed #ccc;
