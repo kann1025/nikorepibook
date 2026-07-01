@@ -186,15 +186,14 @@ def recipe_detail(request,recipe_id):
         
         if ingredient.is_integer_only:
             calculated_quantity = int(calculated_quantity)
-            
-        ingredient.calculated_quantity = calculated_quantity
         
+        ingredient.calculated_quantity = calculated_quantity
+
         if calculated_quantity == int(calculated_quantity):
             ingredient.calculated_quantity = int(calculated_quantity)
+        
         else:
             ingredient.calculated_quantity = calculated_quantity
-
-
     
     return render(
         request,

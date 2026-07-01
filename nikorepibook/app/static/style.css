@@ -131,6 +131,7 @@ body {
     border: none;
     border-radius: 8px;
     font-weight: bold;
+    box-sizing: border-box;
   }
 
   section {
@@ -714,6 +715,7 @@ button {
 
 .recipe-form {
   padding: 16px;
+  box-sizing: border-box;
 }
 
 .recipe-form label {
@@ -862,10 +864,9 @@ button {
 
 .ingredient-item {
   display: grid;
-  grid-template-columns: 1fr 90px 45px;
+  grid-template-columns: 1fr 80px 60px;
   gap: 8px;
   align-items: center;
-
   margin-bottom: 10px;
 }
 
@@ -908,10 +909,9 @@ button {
 
 .ingredient-item {
   display: grid;
-  grid-template-columns: 1fr 90px 45px;
+  grid-template-columns: 1fr 80px 60px;
   gap: 8px;
   align-items: center;
-
   margin-bottom: 10px;
 }
 
@@ -951,13 +951,19 @@ button {
 }
 
 .image-delete-check {
-  display: inline-flex !important;
+  display: flex !important;
   align-items: center;
-  gap: 6px;
-  width: auto !important;
-  margin: 6px 0 12px !important;
-  font-size: 13px;
+  justify-content: flex-start;
+  gap: 8px;
+  width: fit-content !important;
+  margin: 12px 0 24px !important;
+  font-size: 14px;
   color: #555;
+}
+
+.image-delete-check input {
+    width: auto !important;
+    margin: 0 !important;
 }
 
 .edit-sub-images {
@@ -1666,4 +1672,31 @@ form .main-image-upload {
 
 .profile-image.has-image #signup-profile-image-preview {
   display: block !important;
+}
+
+/* 提出前調整：レシピ登録・編集画面のボタン幅 */
+.recipe-form .add-button,
+.recipe-form .save-button {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.count-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.count-row select {
+    width: 120px;
+    box-sizing: border-box;
+}
+
+.count-row span {
+    white-space: nowrap;
+    font-weight: bold;
 }

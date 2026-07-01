@@ -8,7 +8,7 @@
         <h1>レシピ編集</h1>
     </header>
 
-    <section>
+    <section class="recipe-form">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
@@ -108,7 +108,7 @@
                               value="{{ ingredient.id }}"
                               {% if ingredient.is_integer_only %}checked{% endif %}
                             >
-                            小数点なし
+                            整数で表示
                           </label>
                           
                           <label>
@@ -172,7 +172,7 @@
                                        type="checkbox"
                                        name="new_is_integer_only"
                                        value="${newIngredientIndex}">
-                                   小数点なし
+                                   整数で表示
                                 </label>
                             
                             </div>

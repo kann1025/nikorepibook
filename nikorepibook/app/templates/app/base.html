@@ -9,6 +9,7 @@
   {% block content %}
   {% endblock %}
 
+  {% if user.is_authenticated %}
   <nav class="bottom-nav">
     <a href="{% url 'home' %}">🏠<br>ホーム</a>
     <a href="{% url 'shopping_list' %}">🛒<br>買い物リスト</a>
@@ -16,6 +17,7 @@
     <a href="{% url 'mypage' %}">👤<br>マイページ</a>
     <a href="/logout/">↪<br>ログアウト</a>
   </nav>
+  {% endif %}
     
 
 </body>
