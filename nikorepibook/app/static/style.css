@@ -125,7 +125,9 @@ body {
   }
 
   .add-button {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: calc(100% - 32px);
     margin: 0 16px 16px;
     padding: 12px;
@@ -135,10 +137,12 @@ body {
     border-radius: 8px;
     font-weight: bold;
     box-sizing: border-box;
+    text-align: center;
+    text-decoration: none;
   }
 
   section {
-    padding:h 0 16px;
+    padding: 0 16px;
   }
 
   h2 {
@@ -1784,4 +1788,23 @@ form .main-image-upload {
 
 .portfolio-app-button:hover {
     opacity: 0.85;
+}
+
+@media screen and (max-width: 600px) {
+    .search-box {
+        width: calc(100% - 32px);
+        margin: 16px;
+        box-sizing: border-box;
+    }
+
+    .ingredients,
+    .recipe-list {
+        padding: 0 16px;
+        box-sizing: border-box;
+    }
+
+    .add-button {
+        width: calc(100% - 32px);
+        margin: 0 16px 16px;
+    }
 }
