@@ -2049,3 +2049,104 @@ form .main-image-upload {
     border-radius: 8px;
     box-sizing: border-box;
 }
+
+/* スマホ表示の横はみ出し調整 */
+@media screen and (max-width: 600px) {
+    .app {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+        box-sizing: border-box;
+    }
+
+    /* ホーム画面の検索欄 */
+    .search-box {
+        display: grid;
+        grid-template-columns: 1fr 56px;
+        gap: 0;
+
+        width: auto;
+        margin: 16px;
+        padding: 0;
+
+        box-sizing: border-box;
+    }
+
+    .search-box input {
+        width: 100%;
+        min-width: 0;
+        height: 56px;
+        box-sizing: border-box;
+    }
+
+    .search-box button {
+        width: 56px;
+        height: 56px;
+        box-sizing: border-box;
+    }
+
+    /* 献立追加画面 */
+    .calendar-search-form,
+    .calendar-date-box,
+    .calendar-recipe-list {
+        width: auto;
+        margin-left: 16px;
+        margin-right: 16px;
+        box-sizing: border-box;
+    }
+
+    .calendar-search-row {
+        display: grid;
+        grid-template-columns: 1fr 72px;
+        gap: 8px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .calendar-add-search,
+    .calendar-search-button {
+        height: 48px;
+        box-sizing: border-box;
+    }
+
+    .calendar-date-input {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: 48px;
+        padding: 0 12px;
+        box-sizing: border-box;
+    }
+
+    .calendar-add-button {
+        width: auto;
+        margin-left: 16px;
+        margin-right: 16px;
+        box-sizing: border-box;
+    }
+
+    /* 献立表カレンダー */
+    .calendar-section {
+        padding-left: 16px;
+        padding-right: 16px;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .calendar-grid {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .calendar-grid .day,
+    .calendar-grid .day-name {
+        box-sizing: border-box;
+        min-width: 0;
+    }
+}
