@@ -2175,9 +2175,11 @@ form .main-image-upload {
 
 @media screen and (max-width: 600px) {
     .calendar-date-input {
-        height: 44px !important;
-        min-height: 44px !important;
+        width: 100% !important;
+        height: 48px !important;
+        min-height: 48px !important;
         padding: 0 12px !important;
+
         font-size: 16px !important;
         line-height: normal !important;
 
@@ -2188,10 +2190,14 @@ form .main-image-upload {
         border: 1px solid #ddd;
         border-radius: 8px;
         box-sizing: border-box !important;
+
+        text-align: left;
+        appearance: auto;
+        -webkit-appearance: auto;
     }
 
     .calendar-date-input::-webkit-date-and-time-value {
-        text-align: center;
+        text-align: left;
         color: #333;
     }
 }
