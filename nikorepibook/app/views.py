@@ -157,22 +157,29 @@ def signup_view(request):
 
 def login_view(request):
     if request.method == "POST":
-      email = request.POST.get("email")
-      password = request.POST.get("password")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
       
-      user_obj = User.objects.filter(email=email).first()
+        user_obj = User.objects.filter(email=email).first()
       
-      if user_obj is not None:
-          user = authenticate(
-             request,
-             username=user_obj.username,
-             password=password
-          )
+        if user_obj is not None:
+            user = authenticate(
+                request,
+                username=user_obj.username,
+                password=password
+            )
           
-      
-          if user is not None:
-            login(request, user)
-            return redirect("home")
+            if user is not None:
+                login(request, user)
+                return redirect("home")
+
+        return render(
+            request,
+            "app/login.html",
+            {
+                "error": "メールアドレスまたはパスワードが違います。"
+            }
+        )
       
     return render(request, "app/login.html")
 
