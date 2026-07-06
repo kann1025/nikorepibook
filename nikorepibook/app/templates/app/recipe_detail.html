@@ -56,6 +56,11 @@
 
     <h2 class="detail-section-title">材料</h2>
 
+    <div class="serving-info">
+      <p>元レシピ：{{ recipe.servings }}人分</p>
+      <p>マイページの家族構成に合わせて、{{ display_family_servings }}人分に自動換算しています。</p>
+    </div>
+
     <div class="ingredient-detail-list">
       {% for ingredient in ingredients %}
         <div class="ingredient-detail-item">

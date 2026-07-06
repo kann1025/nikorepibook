@@ -89,6 +89,26 @@ def signup_view(request):
                     "error": "パスワードを入力してください。"
                 } 
             )
+            
+        if len(password) < 8:
+            return render(
+                request,
+                "app/signup.html",{
+                    "error": "パスワードは8文字以上で入力してください。"
+                }
+            )
+            
+        has_letter = any(char.isalpha() for char in password)
+        has_number = any(char.isdigit() for char in password)
+        
+        if not has_letter or not has_number:
+            return render(
+                request,
+                "app/signup.html",{
+                    "error": "パスワードは英字と数字を組み合わせて入力してください。"
+                }
+            )
+            
              
         if password != password_confirm:
             return render(
@@ -177,6 +197,11 @@ def recipe_detail(request,recipe_id):
         + (Decimal(profile.child_count) * Decimal("0.5"))
         )
     
+    display_family_servings = family_servings
+
+    if family_servings == int(family_servings):
+        display_family_servings = int(family_servings)
+    
     for ingredient in ingredients:
         calculated_quantity = (
             ingredient.base_quantity
@@ -202,6 +227,7 @@ def recipe_detail(request,recipe_id):
             "recipe":recipe,
             "ingredients":ingredients,
             "family_servings": family_servings,
+            "display_family_servings": display_family_servings,
     })
     
 @login_required    

@@ -26,14 +26,14 @@
     <div id="image-input-area">
       <label class="sub-image-upload">
         <input type="file" name="images" class="sub-image-input">
-        <span>+</span>
+        <span>＋</span>
         <img src="" alt="追加画像プレビュー">
       </label>
 
     </div>
 
     <button type="button" id="add-image-button" class="add-image-button">
-      画像を追加
+      追加画像を増やす
     </button>
 
     <label>タイトル</label>
@@ -44,7 +44,7 @@
     >
 
     <div class="serving-row">
-      <span>何人分？</span>
+      <span>人数</span>
 
       <select name = "servings">
         <option>1</option>
@@ -60,6 +60,15 @@
     </div>
 
     <h2>材料</h2>
+
+    <p class="form-help">
+      卵など小数で表示したくない材料は「整数で表示」にチェックしてください。
+    </p>
+
+    <button type="button" class="unit-help-button" id="open-unit-help">
+      大さじ・小さじの目安を見る
+    </button>
+
     <div id="ingredient-list">
 
       <div class="ingredient-item">
@@ -73,11 +82,17 @@
          name="ingredient_amount"
          placeholder="分量">
 
-        <input
-        type="text"
-        name="ingredient_unit"
-        placeholder="単位"
-        >
+        <select name="ingredient_unit">
+          <option value="">単位</option>
+          <option value="g">g</option>
+          <option value="ml">ml</option>
+          <option value="個">個</option>
+          <option value="本">本</option>
+          <option value="枚">枚</option>
+          <option value="大さじ">大さじ</option>
+          <option value="小さじ">小さじ</option>
+          <option value="少々">少々</option>
+        </select>
 
         <div class="ingredient-options">
            <label>
@@ -102,11 +117,17 @@
          name="ingredient_amount"
          placeholder="分量">
 
-        <input
-        type="text"
-        name="ingredient_unit"
-        placeholder="単位"
-        >
+        <select name="ingredient_unit">
+          <option value="">単位</option>
+          <option value="g">g</option>
+          <option value="ml">ml</option>
+          <option value="個">個</option>
+          <option value="本">本</option>
+          <option value="枚">枚</option>
+          <option value="大さじ">大さじ</option>
+          <option value="小さじ">小さじ</option>
+          <option value="少々">少々</option>
+        </select>
 
         <div class="ingredient-options">
           <label>
@@ -151,6 +172,47 @@
 
 </form>
 
+<div id="unit-help-modal" class="unit-help-modal">
+  <div class="unit-help-content">
+    <button type="button" class="unit-help-close" id="close-unit-help">×</button>
+
+    <h3>大さじ・小さじの目安</h3>
+
+    <p class="form-help">
+      材料によって重さは異なります。目安としてご利用ください。
+    </p>
+
+    <table class="unit-help-table">
+      <tr>
+        <th>材料</th>
+        <th>大さじ1</th>
+        <th>小さじ1</th>
+      </tr>
+      <tr>
+        <td>水</td>
+        <td>約15g</td>
+        <td>約5g</td>
+      </tr>
+      <tr>
+        <td>砂糖</td>
+        <td>約9g</td>
+        <td>約3g</td>
+      </tr>
+      <tr>
+        <td>小麦粉</td>
+        <td>約9g</td>
+        <td>約3g</td>
+      </tr>
+      <tr>
+        <td>油</td>
+        <td>約12g</td>
+        <td>約4g</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+
 </div>
 
 <script>
@@ -174,10 +236,17 @@ document.getElementById("add-ingredient-button").addEventListener("click", funct
          name="ingredient_amount"
          placeholder="分量">
 
-        <input
-         type="text"
-         name="ingredient_unit"
-         placeholder="単位">
+        <select name="ingredient_unit">
+          <option value="">単位</option>
+          <option value="g">g</option>
+          <option value="ml">ml</option>
+          <option value="個">個</option>
+          <option value="本">本</option>
+          <option value="枚">枚</option>
+          <option value="大さじ">大さじ</option>
+          <option value="小さじ">小さじ</option>
+          <option value="少々">少々</option>
+        </select>
 
         <div class="ingredient-options">
          <label>
@@ -251,4 +320,26 @@ document.getElementById("add-ingredient-button").addEventListener("click", funct
     }
   });
 </script>
+
+<script>
+  const openUnitHelp = document.getElementById("open-unit-help");
+  const closeUnitHelp = document.getElementById("close-unit-help");
+  const unitHelpModal = document.getElementById("unit-help-modal");
+
+  openUnitHelp.addEventListener("click", function() {
+    unitHelpModal.style.display = "flex";
+  });
+
+  closeUnitHelp.addEventListener("click", function() {
+    unitHelpModal.style.display = "none";
+  });
+
+  unitHelpModal.addEventListener("click", function(event) {
+    if (event.target === unitHelpModal) {
+      unitHelpModal.style.display = "none";
+    }
+  });
+</script>
+
+
 {% endblock %}

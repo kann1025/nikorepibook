@@ -20,15 +20,23 @@
            type="hidden"
            name="date"
            value="{{ planned_date }}"
-         > 
+         >
 
-         <input
+
+         <div class="calendar-search-row">
+          <input
            type="text"
            name="keyword"
            value="{{ keyword }}"
            placeholder="レシピ検索"
            class="calendar-add-search"
-         >
+          >
+
+          <button type="submit" class="calendar-search-button">
+            検索
+          </button>
+         </div>
+  
     </form>
 
     <form method="POST">
