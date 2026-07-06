@@ -2150,3 +2150,44 @@ form .main-image-upload {
         min-width: 0;
     }
 }
+
+@media screen and (max-width: 600px) {
+    form.search-box {
+        width: calc(100% - 32px) !important;
+        margin: 16px auto !important;
+        padding: 0 !important;
+        display: grid !important;
+        grid-template-columns: 1fr 56px !important;
+        box-sizing: border-box !important;
+    }
+
+    form.search-box input {
+        width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    form.search-box button {
+        width: 56px !important;
+        box-sizing: border-box !important;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .calendar-date-input {
+        width: 100% !important;
+        height: 56px !important;
+        padding: 0 14px !important;
+        line-height: normal !important;
+        font-size: 18px !important;
+        box-sizing: border-box !important;
+        text-align: center;
+        appearance: none;
+        -webkit-appearance: none;
+    }
+
+    .calendar-date-input::-webkit-date-and-time-value {
+        text-align: center;
+        line-height: normal;
+    }
+}
