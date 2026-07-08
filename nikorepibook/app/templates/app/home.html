@@ -8,6 +8,16 @@
     <p>レシピ一覧</p>
   </header>
 
+  {% if messages %}
+    <div class="message-area">
+      {% for message in messages %}
+        <p class="message {{ message.tags }}">
+          {{ message }}
+        </p>
+      {% endfor %}
+    </div>
+  {% endif %}
+
   <form method="GET" action="{% url 'home' %}" class="search-box">
     <input
       type="text"

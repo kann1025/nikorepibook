@@ -10,6 +10,14 @@
 
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
+
+    {% if messages %}
+      {% for message in messages %}
+        <p class="error-message">
+          {{ message }}
+        </p>
+      {% endfor %}
+    {% endif %}
   
   <section class="recipe-form">
 
@@ -32,9 +40,6 @@
 
     </div>
 
-    <button type="button" id="add-image-button" class="add-image-button">
-      追加画像を増やす
-    </button>
 
     <label>タイトル</label>
     <input type="text"
@@ -267,40 +272,74 @@ document.getElementById("add-ingredient-button").addEventListener("click", funct
 </script>
 
 <script>
-  const addImageButton = document.getElementById('add-image-button');
-  const imageInputArea = document.getElementById('image-input-area');
+  document.addEventListener("DOMContentLoaded", function () {
+    const subImageInputArea =
+      document.getElementById("image-input-area");
 
-  function setSubImagePreview(input) {
-    input.addEventListener('change', function() {
-      const file = this.files[0];
-      const uploadBox = this.closest('.sub-image-upload');
-      const previewImage = uploadBox.querySelector('img');
+    function addNewSubImageInput() {
+      const newLabel = document.createElement("label");
+      newLabel.className = "sub-image-upload";
 
-      if (file) {
-        previewImage.src = URL.createObjectURL(file);
-        uploadBox.classList.add('has-image');
-      }
+      newLabel.innerHTML = `
+        <input
+          type="file"
+          name="images"
+          class="sub-image-input"
+          accept="image/*"
+        >
+        <span>＋</span>
+        <img src="" alt="追加画像プレビュー">
+      `;
+
+      subImageInputArea.appendChild(newLabel);
+
+      const newInput =
+        newLabel.querySelector(".sub-image-input");
+
+      setSubImagePreview(newInput);
+    }
+
+    function setSubImagePreview(input) {
+      input.addEventListener("change", function () {
+        const file = this.files[0];
+
+        if (!file) {
+          return;
+        }
+
+        const uploadBox =
+          this.closest(".sub-image-upload");
+
+        const previewImage =
+          uploadBox.querySelector("img");
+
+        previewImage.src =
+          URL.createObjectURL(file);
+
+        uploadBox.classList.add("has-image");
+
+        const allInputs =
+          subImageInputArea.querySelectorAll(
+            ".sub-image-input"
+          );
+
+        const lastInput =
+          allInputs[allInputs.length - 1];
+
+        if (this === lastInput) {
+          addNewSubImageInput();
+        }
+      });
+    }
+
+    const firstInputs =
+      subImageInputArea.querySelectorAll(
+        ".sub-image-input"
+      );
+
+    firstInputs.forEach(function (input) {
+      setSubImagePreview(input);
     });
-  }
-
-  document.querySelectorAll('.sub-image-input').forEach(function(input) {
-    setSubImagePreview(input);
-  });
-
-  addImageButton.addEventListener('click', function() {
-    const newLabel = document.createElement('label');
-    newLabel.className = 'sub-image-upload';
-
-    newLabel.innerHTML = `
-      <input type="file" name="images" class="sub-image-input">
-      <span>＋</span>
-      <img src="" alt="追加画像プレビュー">
-    `;
-
-    imageInputArea.appendChild(newLabel);
-
-    const newInput = newLabel.querySelector('.sub-image-input');
-    setSubImagePreview(newInput);
   });
 </script>
 

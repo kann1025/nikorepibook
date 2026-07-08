@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.contrib import messages
 
 
 @login_required
@@ -90,31 +91,32 @@ def signup_view(request):
                 } 
             )
             
+        password_errors = []
+
         if len(password) < 8:
-            return render(
-                request,
-                "app/signup.html",{
-                    "error": "パスワードは8文字以上で入力してください。"
-                }
+            password_errors.append(
+                "パスワードは8文字以上で入力してください。"
             )
-            
+
         has_letter = any(char.isalpha() for char in password)
         has_number = any(char.isdigit() for char in password)
-        
+
         if not has_letter or not has_number:
+            password_errors.append(
+                "パスワードは英字と数字を組み合わせて入力してください。"
+            )
+
+        if password != password_confirm:
+            password_errors.append(
+                "パスワードが一致しません。"
+            )
+
+        if password_errors:
             return render(
                 request,
-                "app/signup.html",{
-                    "error": "パスワードは英字と数字を組み合わせて入力してください。"
-                }
-            )
-            
-             
-        if password != password_confirm:
-            return render(
-                request, 
-                "app/signup.html",{
-                    "error": "パスワードが一致しません。"
+                "app/signup.html",
+                {
+                    "password_errors": password_errors
                 }
             )
              
@@ -249,7 +251,7 @@ def recipe_edit(request, recipe_id):
         image = request.FILES.get("image")
         recipe.title = request.POST.get("title")
         recipe.servings = request.POST.get("servings")
-        recipe.memo = request.POST.get("memo")
+        recipe.memo = request.POST.get("memo", "").strip()
         
         recipe.reference_url = request.POST.get("reference_url")
         
@@ -266,6 +268,86 @@ def recipe_edit(request, recipe_id):
         new_ingredient_amounts = request.POST.getlist("new_ingredient_amount")
         new_ingredient_units = request.POST.getlist("new_ingredient_unit")
         new_integer_only_list = request.POST.getlist("new_is_integer_only")
+        
+        for ingredient_id, name, amount, unit in zip(
+            ingredient_ids,
+            ingredient_names,
+            ingredient_amounts,
+            ingredient_units,
+        ):
+            name = name.strip()
+            amount = amount.strip()
+            unit = unit.strip()
+
+            if ingredient_id in delete_ingredient_ids:
+                continue
+
+            if name and not amount:
+                messages.error(
+                    request,
+                    f"「{name}」の分量を入力してください。"
+                )
+                return render(
+                    request,
+                    "app/recipe_edit.html",
+                    {
+                        "recipe": recipe,
+                        "ingredients": ingredients,
+                    }
+                )
+
+            if name and not unit:
+                messages.error(
+                    request,
+                    f"「{name}」の単位を選択してください。"
+                )
+                return render(
+                    request,
+                    "app/recipe_edit.html",
+                    {
+                        "recipe": recipe,
+                        "ingredients": ingredients,
+                    }
+                )
+
+        for name, amount, unit in zip(
+            new_ingredient_names,
+            new_ingredient_amounts,
+            new_ingredient_units,
+        ):
+            name = name.strip()
+            amount = amount.strip()
+            unit = unit.strip()
+
+            if name and not amount:
+                messages.error(
+                    request,
+                    f"「{name}」の分量を入力してください。"
+                )
+                return render(
+                    request,
+                    "app/recipe_edit.html",
+                    {
+                        "recipe": recipe,
+                        "ingredients": ingredients,
+                    }
+                )
+
+            if name and not unit:
+                messages.error(
+                    request,
+                    f"「{name}」の単位を選択してください。"
+                )
+                return render(
+                    request,
+                    "app/recipe_edit.html",
+                    {
+                        "recipe": recipe,
+                        "ingredients": ingredients,
+                    }
+                )
+        
+        
         
         for ingredient_id, name, amount,unit in zip(
             ingredient_ids,
@@ -343,6 +425,7 @@ def recipe_edit(request, recipe_id):
                 image=image_file
             )
 
+        messages.success(request, "レシピを編集しました。")
         return redirect("recipe_detail", recipe_id=recipe.id)
     
     return render(
@@ -362,6 +445,7 @@ def recipe_delete(request, recipe_id):
         user=request.user
     )
     recipe.delete()
+    messages.success(request, "レシピを削除しました。")
     return redirect("home")
 
 @login_required    
@@ -600,13 +684,42 @@ def recipe_create(request):
     if request.method == "POST":
        title = request.POST.get("title")
        servings = request.POST.get("servings")
-       memo = request.POST.get("memo")
+       memo = request.POST.get("memo", "").strip()
        reference_url = request.POST.get("reference_url")
        image = request.FILES.get("image")
        ingredient_names = request.POST.getlist("ingredient_name")
        ingredient_amounts = request.POST.getlist("ingredient_amount")
        ingredient_units = request.POST.getlist("ingredient_unit")
        integer_only_list = request.POST.getlist("is_integer_only")
+       
+       for name, amount, unit in zip(
+            ingredient_names,
+            ingredient_amounts,
+            ingredient_units,
+        ):
+            name = name.strip()
+            amount = amount.strip()
+            unit = unit.strip()
+
+            if name and not amount:
+                messages.error(
+                    request,
+                    f"「{name}」の分量を入力してください。"
+                )
+                return render(
+                    request,
+                    "app/recipe_create.html",
+                )
+
+            if name and not unit:
+                messages.error(
+                    request,
+                    f"「{name}」の単位を選択してください。"
+                )
+                return render(
+                    request,
+                    "app/recipe_create.html",
+                )
        
        
        recipe = Recipe.objects.create(
@@ -647,7 +760,8 @@ def recipe_create(request):
                     base_quantity=amount,
                     is_integer_only=str(index) in integer_only_list,
                  )
-       
+                 
+       messages.success(request, "レシピを登録しました。")
        return redirect("home")    
     return render(request,"app/recipe_create.html")
 

@@ -8,6 +8,19 @@
     <h1>レシピ詳細</h1>
   </header>
 
+
+  {% if messages %}
+    <div class="message-area">
+      {% for message in messages %}
+        <p class="message {{ message.tags }}">
+          {{ message }}
+        </p>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+
+
   <section class="recipe-detail-section">
 
     <div class="recipe-detail-image-box">

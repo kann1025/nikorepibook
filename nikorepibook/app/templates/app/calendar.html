@@ -39,10 +39,20 @@
 
                   <span class="day-number">{{ day.day }}</span>
 
+
                   {% for menu in day.menus %}
-                       <br>
-                       <span class="menu-title">{{ menu.recipe.title }}</span>
+                    {% if forloop.counter <= 2 %}
+                      <span class="menu-title">
+                        {{ menu.recipe.title }}
+                      </span>
+                    {% elif forloop.counter == 3 %}
+                      <span class="more-menu">
+                        もっと見る
+                      </span>
+                    {% endif %}
                   {% endfor %}
+                  
+
                 </a>
              {% endfor %}
         {% endfor %}
