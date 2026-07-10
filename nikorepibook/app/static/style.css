@@ -793,7 +793,8 @@ button {
     background: #fff;
 }
 
-.ingredient-item select[name="ingredient_unit"] {
+.ingredient-item select[name="ingredient_unit"],
+.ingredient-item select[name="new_ingredient_unit"] {
     appearance: none;
     -webkit-appearance: none;
 
@@ -2260,4 +2261,9 @@ form .main-image-upload {
 .more-menu {
   font-weight: bold;
   color: #f6a623;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

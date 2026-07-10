@@ -8,6 +8,16 @@
     <p>カレンダー</p>
   </header>
 
+  {% if messages %}
+    <div class="message-area">
+      {% for message in messages %}
+        <p class="message {{ message.tags }}">
+          {{ message }}
+        </p>
+      {% endfor %}
+    </div>
+  {% endif %}
+
   <section class="calendar-section">
 
     <div class="calendar-header">

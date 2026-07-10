@@ -6,7 +6,13 @@
   <div class="app-container">
     <h2>新規登録画面</h2>
 
-    <form action="" method="post" enctype="multipart/form-data" autocomplete="off">
+    <form
+      action=""
+      method="post"
+      enctype="multipart/form-data"
+      autocomplete="off"
+      id="signup-form"
+    >
       {% csrf_token %}
 
       <label>プロフィール画像</label>
@@ -102,7 +108,7 @@
         autocomplete="new-password"
       >
 
-      <button type="submit">アカウントを登録する</button>
+      <button type="submit" id="signup-button">アカウントを登録する</button>
     </form>
   </div>
 
@@ -120,6 +126,20 @@
       }
     });
 
+  </script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("signup-form");
+    const submitButton = document.getElementById("signup-button");
+
+    if (form && submitButton) {
+      form.addEventListener("submit", function () {
+        submitButton.disabled = true;
+        submitButton.textContent = "登録中...";
+      });
+    }
+  });
   </script>
 
   {% endblock %}

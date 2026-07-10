@@ -9,7 +9,11 @@
     </header>
 
     <section class="recipe-form">
-        <form method="post" enctype="multipart/form-data">
+        <form
+         method="post"
+         enctype="multipart/form-data"
+         id="recipe-edit-form"
+        >
             {% csrf_token %}
             
             {% if messages %}
@@ -103,7 +107,17 @@
                         <input type="hidden" name="ingredient_id" value="{{ ingredient.id }}">
                         <input type="text" name="ingredient_name" value="{{ ingredient.name }}" placeholder="材料名">
                         <input type="text" name="ingredient_amount" value="{{ ingredient.amount }}" placeholder="分量">
-                        <input type="text" name="ingredient_unit" value="{{ ingredient.unit }}" placeholder="単位">
+                        <select name="ingredient_unit">
+                          <option value="">選択</option>
+                          <option value="g" {% if ingredient.unit == "g" %}selected{% endif %}>g</option>
+                          <option value="ml" {% if ingredient.unit == "ml" %}selected{% endif %}>ml</option>
+                          <option value="個" {% if ingredient.unit == "個" %}selected{% endif %}>個</option>
+                          <option value="本" {% if ingredient.unit == "本" %}selected{% endif %}>本</option>
+                          <option value="枚" {% if ingredient.unit == "枚" %}selected{% endif %}>枚</option>
+                          <option value="大さじ" {% if ingredient.unit == "大さじ" %}selected{% endif %}>大さじ</option>
+                          <option value="小さじ" {% if ingredient.unit == "小さじ" %}selected{% endif %}>小さじ</option>
+                          <option value="少々" {% if ingredient.unit == "少々" %}selected{% endif %}>少々</option>
+                        </select>
 
                         
                         <div class="ingredient-options">
@@ -167,10 +181,17 @@
                              name="new_ingredient_amount"
                              placeholder="分量">
 
-                            <input
-                             type="text" 
-                             name="new_ingredient_unit"
-                             placeholder="単位">
+                            <select name="new_ingredient_unit">
+                              <option value="">単位</option>
+                              <option value="g">g</option>
+                              <option value="ml">ml</option>
+                              <option value="個">個</option>
+                              <option value="本">本</option>
+                              <option value="枚">枚</option>
+                              <option value="大さじ">大さじ</option>
+                              <option value="小さじ">小さじ</option>
+                              <option value="少々">少々</option>
+                            </select>
 
                             <div class="ingredient-options">
                                 <label>
@@ -203,7 +224,13 @@
                 <textarea name="memo" rows="5" class="form-input">{{ recipe.memo }}</textarea>
             </p>
 
-            <button type="submit" class="add-button">保存する</button>
+            <button
+              type="submit"
+              class="add-button"
+              id="recipe-edit-button"  
+            >
+              保存する
+            </button>
         </form>
     </section>
 
@@ -295,6 +322,21 @@
         setEditSubImagePreview(input);
       });
      });
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+       const form =
+        document.getElementById("recipe-edit-form");
+
+       const submitButton =
+        document.getElementById("recipe-edit-button");
+
+       form.addEventListener("submit", function () {
+          submitButton.disabled = true;
+          submitButton.textContent = "保存中...";
+       });
+      });
     </script>
 
 </div>

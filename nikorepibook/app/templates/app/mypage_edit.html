@@ -12,7 +12,11 @@
 
     
 
-    <form method="post" enctype="multipart/form-data">
+    <form
+      method="post"
+      enctype="multipart/form-data"
+      id="mypage-edit-form"
+    >
         {% csrf_token %}
 
         <label>プロフィール画像</label>
@@ -65,7 +69,11 @@
             <option value="4" {% if profile.child_count == 4 %}selected{% endif %}>4</option>
         </select>
 
-        <button type="submit" class="save-button">
+        <button
+          type="submit"
+          class="save-button"
+          id="mypage-edit-button"
+        >
           保存
         </button>
 
@@ -86,6 +94,20 @@
       profileImagePreview.src = URL.createObjectURL(file);
       profileImagePreview.style.display = 'block';
       profileImageText.style.display = 'none';
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("mypage-edit-form");
+    const submitButton = document.getElementById("mypage-edit-button");
+
+    if (form && submitButton) {
+      form.addEventListener("submit", function () {
+        submitButton.disabled = true;
+        submitButton.textContent = "保存中...";
+      });
     }
   });
 </script>

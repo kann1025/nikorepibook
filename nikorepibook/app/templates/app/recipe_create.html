@@ -8,7 +8,11 @@
     <h1>レシピ登録</h1>
   </header>
 
-  <form method="POST" enctype="multipart/form-data">
+  <form
+    method="POST"
+    enctype="multipart/form-data"
+    id="recipe-create-form"
+  >
     {% csrf_token %}
 
     {% if messages %}
@@ -169,7 +173,11 @@
     >
     </textarea>
 
-    <button type="submit" class="save-button">
+    <button
+      type="submit"
+      class="add-button"
+      id="recipe-create-button"
+    >
       レシピを保存
     </button>
 
@@ -377,6 +385,21 @@ document.getElementById("add-ingredient-button").addEventListener("click", funct
     if (event.target === unitHelpModal) {
       unitHelpModal.style.display = "none";
     }
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form =
+      document.getElementById("recipe-create-form");
+
+    const submitButton =
+      document.getElementById("recipe-create-button");
+
+    form.addEventListener("submit", function () {
+      submitButton.disabled = true;
+      submitButton.textContent = "登録中...";
+    });
   });
 </script>
 

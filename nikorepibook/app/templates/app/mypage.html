@@ -7,6 +7,16 @@
     <h1>マイページ</h1>
   </header>
 
+  {% if messages %}
+    <div class="message-area">
+      {% for message in messages %}
+        <p class="message {{ message.tags }}">
+          {{ message }}
+        </p>
+      {% endfor %}
+    </div>
+  {% endif %}
+
   <section class="mypage-section">
 
     <div class="profile-circle">

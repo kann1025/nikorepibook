@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from .models import Recipe,Ingredient,UserProfile,ShoppingItem,Menu,RecipeImage
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from decimal import Decimal
+from decimal import Decimal,ROUND_HALF_UP
 import calendar
 from datetime import date
 from django.http import JsonResponse
@@ -153,6 +153,8 @@ def signup_view(request):
         profile.save()
 
         login(request, user)
+        
+        messages.success(request, "新規登録が完了しました。")
         return redirect("home")
     
     return render(request,"app/signup.html")
@@ -220,8 +222,16 @@ def recipe_detail(request,recipe_id):
         
         if ingredient.is_integer_only:
             calculated_quantity = int(calculated_quantity)
+            
+            if calculated_quantity == 0:
+                calculated_quantity = 1
+                
+        else:
+            calculated_quantity = calculated_quantity.quantize(
+                Decimal("0.01"),
+                rounding=ROUND_HALF_UP
+            )
         
-        ingredient.calculated_quantity = calculated_quantity
 
         if calculated_quantity == int(calculated_quantity):
             ingredient.calculated_quantity = int(calculated_quantity)
@@ -665,6 +675,7 @@ def calendar_add(request):
                 planned_date=planned_date
             )
             
+        messages.success(request, "献立表を更新しました。")
         return redirect("calendar")
     
     return render(
@@ -792,6 +803,7 @@ def mypage_edit(request):
             
         profile.save()
         
+        messages.success(request, "マイページを更新しました。")
         return redirect("mypage")
         
     return render(request,"app/mypage_edit.html",{
