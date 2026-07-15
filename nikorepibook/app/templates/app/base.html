@@ -19,10 +19,55 @@
     <a href="{% url 'shopping_list' %}">🛒<br>買い物リスト</a>
     <a href="{% url 'calendar' %}">🗓️<br>献立表</a>
     <a href="{% url 'mypage' %}">👤<br>マイページ</a>
-    <a href="/logout/">↪<br>ログアウト</a>
+    <a href="#" class="logout-open-button" id="logout-open-button">
+      ↪<br>ログアウト
+    </a>
   </nav>
+
+  <div class="logout-modal" id="logout-modal">
+   <div class="logout-modal-content">
+    <p>ログアウトしますか？</p>
+
+    <div class="logout-modal-buttons">
+      <button type="button" id="logout-cancel-button">
+        キャンセル
+      </button>
+
+      <a href="/logout/" class="logout-confirm-button">
+        ログアウト
+      </a>
+    </div>
+   </div>
+  </div>
+
   {% endif %}
     
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const openButton = document.getElementById("logout-open-button");
+    const modal = document.getElementById("logout-modal");
+    const cancelButton = document.getElementById("logout-cancel-button");
+
+    if (openButton && modal && cancelButton) {
+      openButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        modal.classList.add("is-open");
+      });
+
+      cancelButton.addEventListener("click", function () {
+        modal.classList.remove("is-open");
+      });
+
+      modal.addEventListener("click", function (event) {
+        if (event.target === modal) {
+          modal.classList.remove("is-open");
+        }
+      });
+    }
+  });
+</script>
+
+
 
 </body>
 </html>

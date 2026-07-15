@@ -52,6 +52,33 @@
         readonly
         >
 
+        <label>メールアドレス</label>
+        <input
+          type="email"
+          name="email"
+          value="{{ request.user.email }}"
+          required
+        >
+
+        <label>新しいパスワード</label>
+        <p class="password-rule">
+          変更する場合のみ、8文字以上で英字と数字を含めて入力してください。
+        </p>
+        <input
+          type="password"
+          name="new_password"
+          autocomplete="new-password"
+        >
+
+        <label>新しいパスワード（確認用）</label>
+        <input
+          type="password"
+          name="new_password_confirm"
+          autocomplete="new-password"
+        >
+
+
+
         <label>大人</label>
         <select name="adult_count">
             <option value="1" {% if profile.adult_count == 1 %}selected{% endif %}>1</option>

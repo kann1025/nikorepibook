@@ -10,6 +10,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 
 
 @login_required
@@ -795,6 +796,70 @@ def mypage_edit(request):
     
     if request.method == "POST":
         image = request.FILES.get("image")
+        
+        email = request.POST.get("email", "").strip()
+        new_password = request.POST.get("new_password", "")
+        new_password_confirm = request.POST.get(
+             "new_password_confirm",
+             ""
+        )
+        
+        errors = []
+         
+        # メールアドレスの確認
+        if not email:
+            errors.append(
+                "メールアドレスを入力してください。"
+            )
+        elif request.user.__class__.objects.filter(
+            email=email
+        ).exclude(
+            pk=request.user.pk
+        ).exists():
+            errors.append(
+                "このメールアドレスはすでに使用されています。"
+            )
+            
+         # パスワードがどちらか入力された場合だけ確認
+        if new_password or new_password_confirm:
+            if len(new_password) < 8:
+                 errors.append(
+                     "新しいパスワードは8文字以上で入力してください。"
+                )
+            has_letter = any(
+                char.isalpha() for char in new_password
+            )
+            has_number = any(
+                char.isdigit() for char in new_password
+            )
+            
+            if not has_letter or not has_number:
+                errors.append(
+                    "新しいパスワードは英字と数字を"
+                    "組み合わせて入力してください。"
+                )
+                
+            if new_password != new_password_confirm:
+                errors.append(
+                    "新しいパスワードが一致しません。"
+                )
+        # エラーがある場合は保存しない
+        
+        if errors:
+            for error in errors:
+                messages.error(request, error)
+                
+            return render(
+                 request,
+                 "app/mypage_edit.html",
+                 {
+                     "profile": profile,
+                 }
+             )
+        
+        # プロフィール情報を更新
+         
+         
         profile.adult_count = request.POST.get("adult_count")
         profile.child_count = request.POST.get("child_count")
         
@@ -802,6 +867,20 @@ def mypage_edit(request):
             profile.image = image
             
         profile.save()
+        
+        # メールアドレスを更新
+        request.user.email = email
+        
+        # 入力された場合だけパスワードを更新
+        if new_password:
+            request.user.set_password(new_password)
+            
+        request.user.save()
+        
+        # パスワード変更後もログイン状態を維持
+        if new_password:
+            update_session_auth_hash(request, request.user)
+            
         
         messages.success(request, "マイページを更新しました。")
         return redirect("mypage")

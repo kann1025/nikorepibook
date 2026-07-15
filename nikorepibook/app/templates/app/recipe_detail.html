@@ -93,9 +93,21 @@
 
     <h2 class="detail-section-title">参考URL</h2>
 
-    <p class="recipe-url">
-        {{ recipe.reference_url }}
-    </p>
+    {% if recipe.reference_url %}
+       <p class="recipe-url">
+        <a
+          href="{{ recipe.reference_url }}"
+          target="_blank"
+           rel="noopener noreferrer"
+        >
+          {{ recipe.reference_url }}
+        </a>
+       </p>
+    {% else %}
+       <p class="recipe-url">
+         参考URLは登録されていません。
+       </p>
+    {%  endif %}
 
     <h2 class="detail-section-title">メモ</h2>
 

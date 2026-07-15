@@ -28,13 +28,33 @@
     </div>
 
     <div class="profile-info">
+
       <p class="mypage-name">
         {{ request.user.username }}
       </p>
 
-      <p><strong>家族構成</strong></p>
-      <p>大人：{{ profile.adult_count }}人</p>
-      <p>こども：{{ profile.child_count }}人</p>
+      <div class="mypage-info-card">
+
+        <div class="mypage-info-row">
+          <span class="mypage-info-label">家族構成</span>
+          <span class="mypage-info-value">
+            大人 {{ profile.adult_count }}人・こども {{ profile.child_count }}人
+          </span>
+        </div>
+
+        <div class="mypage-info-row">
+          <span class="mypage-info-label">メールアドレス</span>
+          <span class="mypage-info-value">
+            {{ request.user.email }}
+          </span>
+        </div>
+      </div>
+
+
+      <p class="mypage-edit-note">
+        プロフィール画像・メールアドレス・パスワード・家族構成は、
+        「マイページの編集」から変更できます。
+      </p>
     
     </div>
 
